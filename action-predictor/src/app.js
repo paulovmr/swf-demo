@@ -1,8 +1,11 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 const swaggerFile = require('../openapi.json');
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 app.get('/action', (req, res) => {
   // #swagger.operationId = 'getAction'
@@ -43,15 +46,15 @@ app.get('/action', (req, res) => {
         }
       }
     });
+  } else {
+    res.send({
+      action: "NO_ACTION_NEEDED"
+    });
   }
-
-  res.send({
-    action: "NO_ACTION_NEEDED"
-  });
 });
 
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`action-predictor service listening on port ${port}`);
 });
