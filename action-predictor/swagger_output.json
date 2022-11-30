@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/action": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "numberOfRunningPods",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "cpuLoad",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "memoryUsage",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
