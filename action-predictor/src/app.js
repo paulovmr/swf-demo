@@ -1,10 +1,11 @@
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('../swagger_output.json');
+const swaggerFile = require('../openapi.json');
 const app = express();
 const port = 3000;
 
 app.get('/action', (req, res) => {
+  // #swagger.operationId = 'getAction'
   const performanceData = {
     numberOfRunningPods: parseInt(req.query.numberOfRunningPods),
     avgCpuLoad: parseInt(req.query.cpuLoad),

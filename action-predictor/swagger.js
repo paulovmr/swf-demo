@@ -1,6 +1,10 @@
-const swaggerAutogen = require('swagger-autogen')();
+const options = {
+  openapi: "3.0.3",
+};
 
-const outputFile = './swagger_output.json';
+const swaggerAutogen = require('swagger-autogen')(options);
+
+const outputFile = './openapi.json';
 const endpointsFiles = ['./src/app.js'];
 
 swaggerAutogen(outputFile, endpointsFiles);
