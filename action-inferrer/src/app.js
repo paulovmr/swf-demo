@@ -30,35 +30,32 @@ app.get("/action", (req, res) => {
     params: {}
   };
 
-  if (performanceData.numberOfRunningPods === 1) {
+  if (performanceData.avgCpuLoad > 90 || performanceData.avgMemoryUsage > 90) {
+    inference = {
+      action: "SCALE_UP",
+      params: {
+        numberOfPods: 2,
+      }
+    };
+  } else if (performanceData.avgCpuLoad > 80 || performanceData.avgMemoryUsage > 80) {
     inference = {
       action: "SCALE_UP",
       params: {
         numberOfPods: 1,
       }
     };
-  } else if (performanceData.numberOfRunningPods === 2) {
+  } else if (performanceData.numberOfRunningPods > 2 && (performanceData.avgCpuLoad < 30 || performanceData.avgMemoryUsage < 30)) {
+    inference = {
+      action: "SCALE_DOWN",
+      params: {
+        numberOfPods: 2,
+      },
+    };
+  } else if (performanceData.numberOfRunningPods > 1 && (performanceData.avgCpuLoad < 50 || performanceData.avgMemoryUsage < 50)) {
     inference = {
       action: "SCALE_DOWN",
       params: {
         numberOfPods: 1,
-      },
-    };
-  } else if (performanceData.numberOfRunningPods === 3) {
-    inference = {
-      action: "DEQUEUE_USERS",
-      params: {
-        numberOfUsers: 1,
-      },
-    };
-  } else if (performanceData.numberOfRunningPods === 4) {
-    inference = {
-      action: "TRIGGER_WORKFLOW",
-      params: {
-        workflowId: "workflowId",
-        params: {
-          customParam: "customParam",
-        },
       },
     };
   }
