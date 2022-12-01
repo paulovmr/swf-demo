@@ -4,7 +4,7 @@ const options = {
 
 const doc = {
   info: {
-    title: "Action Predictor mock API",
+    title: "Ansible mock API",
   },
 };
 

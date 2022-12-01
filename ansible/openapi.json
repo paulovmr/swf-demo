@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Ticket Manager mock API",
+    "title": "Ansible mock API",
     "version": "1.0.0",
     "description": ""
   },
@@ -22,22 +22,10 @@
         }
       }
     },
-    "/ticket": {
+    "/jobTemplate/{id}": {
       "post": {
         "description": "",
-        "operationId": "createTicket",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/ticket/{id}": {
-      "delete": {
-        "description": "",
-        "operationId": "closeTicket",
+        "operationId": "triggerJobTemplate",
         "parameters": [
           {
             "name": "id",
@@ -46,7 +34,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "ID of the ticket to be closed"
+            "description": "ID of the Job Template to be triggered"
           }
         ],
         "responses": {
