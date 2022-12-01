@@ -22,31 +22,31 @@
         }
       }
     },
-    "/action": {
-      "get": {
+    "/ticket": {
+      "post": {
         "description": "",
-        "operationId": "getAction",
+        "operationId": "createTicket",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/ticket/{id}": {
+      "delete": {
+        "description": "",
+        "operationId": "closeTicket",
         "parameters": [
           {
-            "name": "numberOfRunningPods",
-            "in": "query",
+            "name": "id",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "cpuLoad",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "memoryUsage",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "ID of the ticket to be closed"
           }
         ],
         "responses": {

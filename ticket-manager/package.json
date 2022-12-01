@@ -1,5 +1,5 @@
 {
-  "name": "action-predictor",
+  "name": "ticket-manager",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,10 +14,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "swagger-ui-express": "^4.6.0"
+    "swagger-ui-express": "^4.6.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "swagger-autogen": "^2.22.0",
-    "prettier": "^2.8.0"
+    "prettier": "^2.8.0",
+    "swagger-autogen": "^2.22.0"
   }
 }

@@ -1,13 +1,18 @@
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const cors = require('cors');
-const swaggerFile = require('../openapi.json');
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const cors = require("cors");
+const swaggerFile = require("../openapi.json");
 const app = express();
 const port = 3000;
+const serviceName = "action-predictor";
 
 app.use(cors());
 
-app.get('/action', (req, res) => {
+app.get("/", (_req, res) => {
+  res.send(`Hello from "${serviceName}" service`);
+});
+
+app.get("/action", (req, res) => {
   // #swagger.operationId = 'getAction'
   const performanceData = {
     numberOfRunningPods: parseInt(req.query.numberOfRunningPods),
@@ -19,22 +24,22 @@ app.get('/action', (req, res) => {
     res.send({
       action: "SCALE_UP",
       params: {
-        numberOfPods: 1
-      }
+        numberOfPods: 1,
+      },
     });
   } else if (performanceData.numberOfRunningPods === 2) {
     res.send({
       action: "SCALE_DOWN",
       params: {
-        numberOfPods: 1
-      }
+        numberOfPods: 1,
+      },
     });
   } else if (performanceData.numberOfRunningPods === 3) {
     res.send({
       action: "DEQUEUE_USERS",
       params: {
-        numberOfUsers: 1
-      }
+        numberOfUsers: 1,
+      },
     });
   } else if (performanceData.numberOfRunningPods === 4) {
     res.send({
@@ -42,19 +47,19 @@ app.get('/action', (req, res) => {
       params: {
         workflowId: "workflowId",
         params: {
-          customParam: "customParam"
-        }
-      }
+          customParam: "customParam",
+        },
+      },
     });
   } else {
     res.send({
-      action: "NO_ACTION_NEEDED"
+      action: "NO_ACTION_NEEDED",
     });
   }
 });
 
-app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
-  console.log(`action-predictor service listening on port ${port}`);
+  console.log(`${serviceName} service listening on port ${port}`);
 });
