@@ -1,5 +1,8 @@
 const express = require("express");
 const swaggerUi = require("swagger-ui-express");
+const consoleStamp = require("console-stamp")(console, {
+  format: ':date(yyyy-mm-dd HH:MM:ss.l)'
+});
 const cors = require("cors");
 const swaggerFile = require("../openapi.json");
 const app = express();
@@ -20,7 +23,7 @@ app.get("/action", (req, res) => {
     avgMemoryUsage: parseInt(req.query.avgMemoryUsage),
   };
 
-  console.info(">> Action inference requested - Pods:", performanceData.numberOfRunningPods, ", CPU:", performanceData.avgCpuLoad + "%", ", Memory:", performanceData.avgMemoryUsage + "%")
+  console.info("[SWF-DEMO] Action inference requested - Pods:", performanceData.numberOfRunningPods, ", CPU:", performanceData.avgCpuLoad + "%", ", Memory:", performanceData.avgMemoryUsage + "%")
 
   let inference = {
     action: "NO_ACTION_NEEDED",
@@ -60,7 +63,7 @@ app.get("/action", (req, res) => {
     };
   }
 
-  console.info(">> Action inference finished - Action:", inference.action, ", params:", inference.params);
+  console.info("[SWF-DEMO] Action inference finished - Action:", inference.action, ", params:", inference.params);
   res.send(inference);
 });
 

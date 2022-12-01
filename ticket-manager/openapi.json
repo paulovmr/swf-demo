@@ -35,6 +35,25 @@
       }
     },
     "/ticket/{id}": {
+      "put": {
+        "description": "",
+        "operationId": "updateTicket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      },
       "delete": {
         "description": "",
         "operationId": "closeTicket",
