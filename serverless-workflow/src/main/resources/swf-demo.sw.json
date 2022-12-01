@@ -1,0 +1,183 @@
+{
+  "id": "swf_demo",
+  "version": "1.0",
+  "specVersion": "0.8",
+  "name": "SWF Demo",
+  "description": "SWF Demo",
+  "start": "NotifyStart",
+  "functions": [
+    {
+      "name": "Trigger Job Template on Ansible",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ansible/openapi.json#triggerJobTemplate",
+      "type": "rest"
+    },
+    {
+      "name": "Check action on RHODS",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/action-inferrer/openapi.json#getAction",
+      "type": "rest"
+    },
+    {
+      "name": "Create ticket on ServiceNow",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/openapi.json#createTicket",
+      "type": "rest"
+    },
+    {
+      "name": "Close ticket on ServiceNow",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/openapi.json#closeTicket",
+      "type": "rest"
+    }
+  ],
+  "events": [
+    {
+      "name": "StartEvent",
+      "source": "monitoring",
+      "type": "monitoring"
+    }
+  ],
+  "states": [
+    {
+      "name": "NotifyStart",
+      "type": "event",
+      "onEvents": [
+        {
+          "eventRefs": ["StartEvent"]
+        }
+      ],
+      "transition": "CreateTicket"
+    },
+    {
+      "name": "CreateTicket",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Create ticket on ServiceNow",
+            "arguments": {}
+          }
+        }
+      ],
+      "transition": "CheckAction"
+    },
+    {
+      "name": "CheckAction",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Check action on RHODS",
+            "arguments": {
+              "numberOfRunningPods": ".numberOfRunningPods",
+              "avgCpuLoad": ".avgCpuLoad",
+              "avgMemoryUsage": ".avgMemoryUsage"
+            }
+          }
+        }
+      ],
+      "transition": "ChooseOnAction"
+    },
+    {
+      "name": "ChooseOnAction",
+      "type": "switch",
+      "dataConditions": [
+        {
+          "condition": "${ .action == \"SCALE_UP\" }",
+          "transition": "ScaleUp"
+        },
+        {
+          "condition": "${ .action == \"SCALE_DOWN\" }",
+          "transition": "ScaleDown"
+        },
+        {
+          "condition": "${ .action == \"DEQUEUE_USERS\" }",
+          "transition": "DequeueUsers"
+        },
+        {
+          "condition": "${ .action == \"TRIGGER_WORKFLOW\" }",
+          "transition": "TriggerWorkflow"
+        }
+      ],
+      "defaultCondition": {
+        "end": true
+      }
+    },
+    {
+      "name": "ScaleUp",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Trigger Job Template on Ansible",
+            "arguments": {
+              "id": 1,
+              "extra_vars": {
+                "numberOfPods": ".numberOfPods"
+              }
+            }
+          }
+        }
+      ],
+      "transition": "CloseTicket"
+    },
+    {
+      "name": "ScaleDown",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Trigger Job Template on Ansible",
+            "arguments": {
+              "id": 2,
+              "extra_vars": {
+                "numberOfPods": ".numberOfPods"
+              }
+            }
+          }
+        }
+      ],
+      "transition": "CloseTicket"
+    },
+    {
+      "name": "DequeueUsers",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Trigger Job Template on Ansible",
+            "arguments": {
+              "id": 3,
+              "extra_vars": {
+                "numberOfUsers": ".numberOfUsers"
+              }
+            }
+          }
+        }
+      ],
+      "transition": "CloseTicket"
+    },
+    {
+      "name": "TriggerWorkflow",
+      "type": "operation",
+      "actions": [
+        {
+          "subFlowRef": "jsongreet"
+        }
+      ],
+      "transition": "CloseTicket"
+    },
+    {
+      "name": "CloseTicket",
+      "type": "operation",
+      "end": true,
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "Close ticket on ServiceNow",
+            "arguments": {
+              "id": ".ticketId"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
