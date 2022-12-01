@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Action Predictor mock API",
+    "title": "Action Inferrer mock API",
     "version": "1.0.0",
     "description": ""
   },
@@ -35,14 +35,14 @@
             }
           },
           {
-            "name": "cpuLoad",
+            "name": "avgCpuLoad",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "memoryUsage",
+            "name": "avgMemoryUsage",
             "in": "query",
             "schema": {
               "type": "string"
