@@ -1,0 +1,75 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Monitoring System mock API",
+    "version": "1.0.0",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/performanceData": {
+      "post": {
+        "description": "",
+        "operationId": "changePerformanceData",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfRunningPods": {
+                    "type": "integer"
+                  },
+                  "avgCpuLoad": {
+                    "type": "integer"
+                  },
+                  "avgMemoryUsage": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfRunningPods": {
+                    "type": "integer"
+                  },
+                  "avgCpuLoad": {
+                    "type": "integer"
+                  },
+                  "avgMemoryUsage": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
