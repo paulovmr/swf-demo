@@ -8,7 +8,7 @@ const consoleStamp = require("console-stamp")(console, {
 const cors = require("cors");
 const swaggerFile = require("../ticket_manager_openapi.json");
 const app = express();
-const port = 3000;
+const port = process.env.PORT ?? 3000;
 const serviceName = "ticket-manager";
 
 app.use(bodyParser.urlencoded({ extended: true }));

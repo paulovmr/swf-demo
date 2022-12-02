@@ -8,7 +8,7 @@ const cors = require("cors");
 const axios = require('axios');
 const swaggerFile = require("../monitoring_system_openapi.json");
 const app = express();
-const port = 3000;
+const port = process.env.PORT ?? 3000;
 const serviceName = "monitoring-system";
 
 app.use(bodyParser.urlencoded({ extended: true }));
