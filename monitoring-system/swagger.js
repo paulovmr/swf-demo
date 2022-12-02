@@ -11,7 +11,7 @@ const doc = {
 
 const swaggerAutogen = require("swagger-autogen")(options);
 
-const outputFile = "./openapi.json";
+const outputFile = "./monitoring_system_openapi.json";
 const endpointsFiles = ["./src/app.js"];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

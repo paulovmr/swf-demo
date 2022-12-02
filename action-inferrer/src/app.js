@@ -4,7 +4,7 @@ const consoleStamp = require("console-stamp")(console, {
   format: ':date(yyyy-mm-dd HH:MM:ss.l)'
 });
 const cors = require("cors");
-const swaggerFile = require("../openapi.json");
+const swaggerFile = require("../action_inferrer_openapi.json");
 const app = express();
 const port = 3000;
 const serviceName = "action-inferrer";

@@ -8,22 +8,22 @@
   "functions": [
     {
       "name": "Trigger Job Template on Ansible",
-      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ansible/openapi.json#triggerJobTemplate",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ansible/ansible_openapi.json#triggerJobTemplate",
       "type": "rest"
     },
     {
       "name": "Check action on RHODS",
-      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/action-inferrer/openapi.json#getAction",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/action-inferrer/action_inferrer_openapi.json#getAction",
       "type": "rest"
     },
     {
       "name": "Create ticket on ServiceNow",
-      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/openapi.json#createTicket",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/ticket_manager_openapi.json#createTicket",
       "type": "rest"
     },
     {
       "name": "Close ticket on ServiceNow",
-      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/openapi.json#closeTicket",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/ticket-manager/ticket_manager_openapi.json#closeTicket",
       "type": "rest"
     }
   ],
