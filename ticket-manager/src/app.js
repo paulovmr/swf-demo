@@ -21,11 +21,24 @@ app.get("/", (_req, res) => {
 
 app.post("/ticket", (req, res) => {
   // #swagger.operationId = 'createTicket'
+  /*  #swagger.responses[201] = {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                ticketId: { type: 'string' }
+              }
+            }
+          }
+        }
+      }
+   */
   const ticketId = uuidv4();
 
   console.info("[SWF-DEMO] Ticked with id", ticketId, "was created with fields:", req.body);
 
-  res.send({
+  res.status(201).send({
     ticketId: ticketId,
   });
 });
