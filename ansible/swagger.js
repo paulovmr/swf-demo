@@ -6,6 +6,7 @@ const doc = {
   info: {
     title: "Ansible mock API",
   },
+  host: null,
 };
 
 const swaggerAutogen = require("swagger-autogen")(options);

@@ -6,6 +6,7 @@ const doc = {
   info: {
     title: "Monitoring System mock API",
   },
+  host: null,
 };
 
 const swaggerAutogen = require("swagger-autogen")(options);
