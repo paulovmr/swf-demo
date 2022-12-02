@@ -17,7 +17,7 @@ app.get("/", (_req, res) => {
 
 app.post("/jobTemplate/:id", (req, res) => {
   // #swagger.operationId = 'triggerJobTemplate'
-  // #swagger.parameters['id'] = { description: 'ID of the Job Template to be triggered' }
+  // #swagger.parameters['id'] = { schema: { type: 'integer' }, description: 'ID of the Job Template to be triggered' }
 
   console.info("[SWF-DEMO] Ansible job with id", req.params.id, "was triggered.");
 

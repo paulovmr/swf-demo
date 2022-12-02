@@ -27,7 +27,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "ID of the Job Template to be triggered"
           }
