@@ -5,6 +5,7 @@ const consoleStamp = require("console-stamp")(console, {
   format: ':date(yyyy-mm-dd HH:MM:ss.l)'
 });
 const cors = require("cors");
+const axios = require('axios');
 const swaggerFile = require("../monitoring_system_openapi.json");
 const app = express();
 const port = 3000;
@@ -41,10 +42,24 @@ app.post("/performanceData", (req, res) => {
 
   console.info("[SWF-DEMO] Performance data changed - Pods:", performanceData.numberOfRunningPods, ", CPU:", performanceData.avgCpuLoad + "%", ", Memory:", performanceData.avgMemoryUsage + "%")
 
-  console.info("[SWF-DEMO] Workflow triggered");
-  // TODO Trigger event to start workflow
+  const headers = {
+    'content-type': 'application/json',
+    'ce-specversion': '1.0',
+    'ce-source': 'monitoring',
+    'ce-type': 'monitoring',
+    'ce-id': '12346',
+  }
 
-  res.sendStatus(204);
+  console.info("[SWF-DEMO] Cloud event requested.");
+  axios.post(req.body.swfDeployUrl, performanceData, {
+    headers: headers
+  }).then(_res => {
+    console.info("[SWF-DEMO] Cloud event triggered.");
+    res.sendStatus(204);
+  }).catch(error => {
+    console.info("[SWF-DEMO] Cloud event failed to be triggered:", error);
+    res.sendStatus(500);
+  });
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
