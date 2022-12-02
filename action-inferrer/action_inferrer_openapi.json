@@ -46,7 +46,22 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string"
+                    },
+                    "params": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

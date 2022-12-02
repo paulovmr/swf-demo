@@ -17,6 +17,20 @@ app.get("/", (_req, res) => {
 
 app.get("/action", (req, res) => {
   // #swagger.operationId = 'getAction'
+  /*  #swagger.responses[200] = {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+              properties: {
+                action: { type: 'string' },
+                params: { type: 'object' }
+              }
+            }
+          }
+        }
+      }
+   */
   const performanceData = {
     numberOfRunningPods: parseInt(req.query.numberOfRunningPods),
     avgCpuLoad: parseInt(req.query.avgCpuLoad),
