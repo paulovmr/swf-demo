@@ -7,12 +7,24 @@ body {
   width: 100%;
 }
 
+#root div {
+  padding: 20px;
+}
+
 .react-grid-item {
   box-sizing: border-box;
 }
 
 .react-grid-item:not(.react-grid-placeholder) {
   background: #e0e0e0;
+}
+
+.react-grid-item form {
+  display: grid;
+}
+
+.react-grid-item form label {
+  margin: 10px;
 }
 
 .react-grid-item .text {
@@ -25,4 +37,10 @@ body {
   right: 0;
   margin: auto;
   height: 24px;
+}
+
+.react-grid-item input,
+.react-grid-item button {
+  margin-left: 10px;
+  font-size: 16px;
 }
