@@ -6,6 +6,8 @@ const consoleStamp = require("console-stamp")(console, {
 });
 const cors = require("cors");
 const axios = require('axios');
+const store = require('store');
+
 const swaggerFile = require("../monitoring_system_openapi.json");
 const app = express();
 const port = process.env.PORT ?? 3000;
@@ -35,12 +37,12 @@ app.post("/performanceData", (req, res) => {
    */
 
   const performanceData = {
-    numberOfRunningPods: parseInt(req.body.numberOfRunningPods),
-    avgCpuLoad: parseInt(req.body.avgCpuLoad),
-    avgMemoryUsage: parseInt(req.body.avgMemoryUsage),
+    numberOfRunningPods: req.body.numberOfRunningPods,
+    avgCpuLoad: req.body.avgCpuLoad,
+    avgMemoryUsage: req.body.avgMemoryUsage,
   };
 
-  console.info("[SWF-DEMO] Performance data changed - Pods:", performanceData.numberOfRunningPods, ", CPU:", performanceData.avgCpuLoad + "%", ", Memory:", performanceData.avgMemoryUsage + "%")
+  log("[SWF-DEMO] Performance data changed - Pods:" + performanceData.numberOfRunningPods + ", CPU:" + performanceData.avgCpuLoad + "%" + ", Memory:" + performanceData.avgMemoryUsage + "%");
 
   const headers = {
     'content-type': 'application/json',
@@ -50,16 +52,25 @@ app.post("/performanceData", (req, res) => {
     'ce-id': '12346',
   }
 
-  console.info("[SWF-DEMO] Cloud event requested.");
+  log("[SWF-DEMO] Cloud event requested.");
   axios.post(req.body.swfDeployUrl, performanceData, {
     headers: headers
   }).then(_res => {
-    console.info("[SWF-DEMO] Cloud event triggered.");
+    log("[SWF-DEMO] Cloud event triggered.");
     res.sendStatus(204);
   }).catch(error => {
-    console.info("[SWF-DEMO] Cloud event failed to be triggered:", error);
+    log("[SWF-DEMO] Cloud event failed to be triggered:" + error);
     res.sendStatus(500);
   });
+});
+
+app.get("/log/:lineNumber", (req, res) => {
+  const logLine = store.get(""+req.params.lineNumber);
+  if (logLine) {
+    res.send(logLine);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
@@ -67,3 +78,11 @@ app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.listen(port, () => {
   console.log(`${serviceName} service listening on port ${port}`);
 });
+
+const log = (message) => {
+  console.info(message);
+  const n = store.get("logSize") ?? 0;
+  console.warn(n);
+  store.set(""+n, message);
+  store.set("logSize", n + 1);
+};
