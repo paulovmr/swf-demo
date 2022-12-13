@@ -3,6 +3,7 @@ import './App.css';
 import Responsive, {Layout, WidthProvider} from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import axios from "axios";
+import Log from "./Log";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -21,8 +22,6 @@ function App() {
     const [avgMemoryLoadPerUser, setAvgMemoryLoadPerUser] = useState(0);
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
-
-    const logRef = useRef<HTMLTextAreaElement>(null);
 
   const layout: Layout[] = useMemo(() => [{
       i: EXECUTION_PARAMETERS,
@@ -63,23 +62,6 @@ function App() {
   const stopPropagation: MouseEventHandler = useCallback(event => {
       event.stopPropagation();
   }, []);
-
-  const [logSize, setLogSize] = useState(0);
-
-  useEffect(() => {
-    const logPooling = setInterval(() => {
-        axios.get("http://localhost:3000/log/" + logSize).then(res => {
-            logRef.current!.value += res.data + '\n';
-            setLogSize(logSize + 1);
-        }).catch(err => {
-            console.log("No log updates.");
-        });
-    }, 1000);
-
-    return () => {
-        clearInterval(logPooling);
-    }
-  }, [logSize, logRef]);
 
   return (
     <div className={"root"}>
@@ -138,7 +120,7 @@ function App() {
             </div>
             <div key={MONITORING_SYSTEM}>
                 <h3>Monitoring</h3>
-                <textarea ref={logRef} onMouseDown={stopPropagation}></textarea>
+                <Log baseUrl={"http://localhost:3000"}></Log>
             </div>
             <div key={ACTION_INFERRER}>
                 <h3>Action Inferrer</h3>

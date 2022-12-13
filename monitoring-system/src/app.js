@@ -1,9 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
-const consoleStamp = require("console-stamp")(console, {
-  format: ':date(yyyy-mm-dd HH:MM:ss.l)'
-});
 const cors = require("cors");
 const axios = require('axios');
 const store = require('store');
@@ -80,9 +77,10 @@ app.listen(port, () => {
 });
 
 const log = (message) => {
-  console.info(message);
+  const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/Z/, '');
+  const messageWithTimestamp = "[" + timestamp + "] " + message;
+  console.info(messageWithTimestamp);
   const n = store.get("logSize") ?? 0;
-  console.warn(n);
-  store.set(""+n, message);
+  store.set("" + n, messageWithTimestamp);
   store.set("logSize", n + 1);
 };
