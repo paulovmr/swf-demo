@@ -24,7 +24,10 @@ function App() {
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 
-    const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3000");
+    const [actionInferrerUrl, setActionInferrerUrl] = useState("http://localhost:3001");
+    const [ansibleUrl, setAnsibleUrl] = useState("http://localhost:3002");
+    const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3003");
+    const [ticketManagerUrl, setTicketManagerUrl] = useState("http://localhost:3004");
 
   const layout: Layout[] = useMemo(() => [{
       i: EXECUTION_PARAMETERS,
@@ -129,13 +132,25 @@ function App() {
                 <Log baseUrl={monitoringUrl}></Log>
             </div>
             <div key={ACTION_INFERRER}>
-                <h3>Action Inferrer</h3>
+                <div className={"url"}>
+                    <h3>Action Inferrer</h3>
+                    <Url currentUrl={actionInferrerUrl} urlChangedCallback={setActionInferrerUrl}></Url>
+                </div>
+                <Log baseUrl={actionInferrerUrl}></Log>
             </div>
             <div key={ANSIBLE}>
-                <h3>Ansible</h3>
+                <div className={"url"}>
+                    <h3>Ansible</h3>
+                    <Url currentUrl={ansibleUrl} urlChangedCallback={setAnsibleUrl}></Url>
+                </div>
+                <Log baseUrl={ansibleUrl}></Log>
             </div>
             <div key={TICKET_MANAGER}>
-                <h3>Ticket Manager</h3>
+                <div className={"url"}>
+                    <h3>Ticket Manager</h3>
+                    <Url currentUrl={ticketManagerUrl} urlChangedCallback={setTicketManagerUrl}></Url>
+                </div>
+                <Log baseUrl={ticketManagerUrl}></Log>
             </div>
         </ResponsiveGridLayout>
     </div>

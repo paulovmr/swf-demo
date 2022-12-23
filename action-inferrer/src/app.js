@@ -6,7 +6,7 @@ const consoleStamp = require("console-stamp")(console, {
 const cors = require("cors");
 const swaggerFile = require("../action_inferrer_openapi.json");
 const app = express();
-const port = process.env.PORT ?? 3000;
+const port = process.env.PORT ?? 3001;
 const serviceName = "action-inferrer";
 
 app.use(cors());
