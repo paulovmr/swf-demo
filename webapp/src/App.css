@@ -51,3 +51,19 @@ body {
   color: white;
   background-color: black;
 }
+
+.url {
+  height: 30px;
+}
+
+.url * {
+  display: inline;
+}
+
+.url i {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

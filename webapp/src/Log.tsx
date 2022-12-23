@@ -24,12 +24,17 @@ function Log(props: Props) {
         }).catch(err => {
             console.log("No log updates.");
         });
-    }, 1000);
+    }, 300);
 
     return () => {
         clearInterval(logPooling);
     }
-  }, [logSize, logRef]);
+  }, [logSize, logRef, props.baseUrl]);
+
+  useEffect(() => {
+      logRef.current!.value = "";
+      setLogSize(0);
+  }, [props.baseUrl]);
 
   return (
     <div className={"log"}>

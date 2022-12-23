@@ -39,7 +39,7 @@ app.post("/performanceData", (req, res) => {
     avgMemoryUsage: req.body.avgMemoryUsage,
   };
 
-  log("[SWF-DEMO] Performance data changed - Pods:" + performanceData.numberOfRunningPods + ", CPU:" + performanceData.avgCpuLoad + "%" + ", Memory:" + performanceData.avgMemoryUsage + "%");
+  log("Update - Pods: " + performanceData.numberOfRunningPods + ", CPU: " + performanceData.avgCpuLoad + "%" + ", Memory: " + performanceData.avgMemoryUsage + "%");
 
   const headers = {
     'content-type': 'application/json',
@@ -49,14 +49,14 @@ app.post("/performanceData", (req, res) => {
     'ce-id': '12346',
   }
 
-  log("[SWF-DEMO] Cloud event requested.");
+  log("Cloud event requested");
   axios.post(req.body.swfDeployUrl, performanceData, {
     headers: headers
   }).then(_res => {
-    log("[SWF-DEMO] Cloud event triggered.");
+    log("Cloud event triggered sucessfully");
     res.sendStatus(204);
   }).catch(error => {
-    log("[SWF-DEMO] Cloud event failed to be triggered:" + error);
+    log("Cloud event failed to be triggered: " + error);
     res.sendStatus(500);
   });
 });
@@ -73,7 +73,7 @@ app.get("/log/:lineNumber", (req, res) => {
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
-  console.log(`${serviceName} service listening on port ${port}`);
+  log(`${serviceName} service listening on port ${port}`);
 });
 
 const log = (message) => {

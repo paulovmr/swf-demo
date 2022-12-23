@@ -4,6 +4,7 @@ import Responsive, {Layout, WidthProvider} from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
 import axios from "axios";
 import Log from "./Log";
+import Url from "./Url";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -22,6 +23,8 @@ function App() {
     const [avgMemoryLoadPerUser, setAvgMemoryLoadPerUser] = useState(0);
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
+
+    const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3000");
 
   const layout: Layout[] = useMemo(() => [{
       i: EXECUTION_PARAMETERS,
@@ -119,8 +122,11 @@ function App() {
                 </form>
             </div>
             <div key={MONITORING_SYSTEM}>
-                <h3>Monitoring</h3>
-                <Log baseUrl={"http://localhost:3000"}></Log>
+                <div className={"url"}>
+                    <h3>Monitoring</h3>
+                    <Url currentUrl={monitoringUrl} urlChangedCallback={setMonitoringUrl}></Url>
+                </div>
+                <Log baseUrl={monitoringUrl}></Log>
             </div>
             <div key={ACTION_INFERRER}>
                 <h3>Action Inferrer</h3>
