@@ -17,6 +17,43 @@
         }
       }
     },
+    "/simulateUsers": {
+      "post": {
+        "description": "",
+        "operationId": "simulateUsers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/jobTemplate/{id}": {
       "post": {
         "description": "",
@@ -35,6 +72,60 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfPods": {
+                    "type": "integer"
+                  },
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfPods": {
+                    "type": "integer"
+                  },
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/log/{lineNumber}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lineNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

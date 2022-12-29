@@ -23,7 +23,11 @@ function Url(props: Props) {
 
   return (
     <div>
-        <i onMouseDown={stopPropagation} onClick={() => setUrlInputVisible(!urlInputVisible)}><FontAwesomeIcon icon="cog" /></i>
+        <i
+            onMouseDown={stopPropagation}
+            onClick={() => setUrlInputVisible(!urlInputVisible)}>
+            <FontAwesomeIcon icon="cog" />
+        </i>
         <input
             type={"text"}
             value={url}

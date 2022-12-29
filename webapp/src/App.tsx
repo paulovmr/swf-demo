@@ -19,8 +19,8 @@ function App() {
 
     const [minActivePods, setMinActivePods] = useState(1);
     const [maxActivePods, setMaxActivePods] = useState(10);
-    const [avgCPULoadPerUser, setAvgCPULoadPerUser] = useState(0);
-    const [avgMemoryLoadPerUser, setAvgMemoryLoadPerUser] = useState(0);
+    const [avgCPULoadPerUser, setAvgCPULoadPerUser] = useState(40);
+    const [avgMemoryLoadPerUser, setAvgMemoryLoadPerUser] = useState(40);
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 

@@ -60,10 +60,16 @@ body {
   display: inline;
 }
 
-.url i {
+#root i {
   cursor: pointer;
 }
 
 .hidden {
   display: none;
+}
+
+.log .refresh {
+  right: 50px;
+  position: fixed;
+  color: white;
 }
