@@ -67,8 +67,7 @@
             "refName": "Check action on RHODS",
             "arguments": {
               "numberOfRunningPods": ".numberOfRunningPods",
-              "avgCpuLoad": ".avgCpuLoad",
-              "avgMemoryUsage": ".avgMemoryUsage"
+              "avgLoad": ".avgLoad"
             }
           }
         }

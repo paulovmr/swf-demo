@@ -30,14 +30,7 @@
             }
           },
           {
-            "name": "avgCpuLoad",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "avgMemoryUsage",
+            "name": "avgLoad",
             "in": "query",
             "schema": {
               "type": "string"
@@ -62,6 +55,29 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/log/{lineNumber}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lineNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

@@ -1,9 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
-const consoleStamp = require("console-stamp")(console, {
-  format: ':date(yyyy-mm-dd HH:MM:ss.l)'
-});
 const cors = require("cors");
 const store = require('store');
 
