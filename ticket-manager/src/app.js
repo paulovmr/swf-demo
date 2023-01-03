@@ -2,10 +2,9 @@ const { v4: uuidv4 } = require("uuid");
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express");
-const consoleStamp = require("console-stamp")(console, {
-  format: ':date(yyyy-mm-dd HH:MM:ss.l)'
-});
 const cors = require("cors");
+const store = require('store');
+
 const swaggerFile = require("../ticket_manager_openapi.json");
 const app = express();
 const port = process.env.PORT ?? 3004;
@@ -36,7 +35,7 @@ app.post("/ticket", (req, res) => {
    */
   const ticketId = uuidv4();
 
-  console.info("[SWF-DEMO] Ticked with id", ticketId, "was created with fields:", req.body);
+  log("[SWF-DEMO] Ticked with id", ticketId, "was created with fields:", req.body);
 
   res.status(201).send({
     ticketId: ticketId,
@@ -46,7 +45,7 @@ app.post("/ticket", (req, res) => {
 app.put("/ticket/:id", (req, res) => {
   // #swagger.operationId = 'updateTicket'
 
-  console.info("[SWF-DEMO] Ticked with id", req.params.id, "was updated with fields:", req.body);
+  log("[SWF-DEMO] Ticked with id", req.params.id, "was updated with fields:", req.body);
 
   res.sendStatus(204);
 });
@@ -55,13 +54,31 @@ app.delete("/ticket/:id", (req, res) => {
   // #swagger.operationId = 'closeTicket'
   // #swagger.parameters['id'] = { description: 'ID of the ticket to be closed' }
 
-  console.info("[SWF-DEMO] Ticked with id", req.params.id, "was closed.");
+  log("[SWF-DEMO] Ticked with id", req.params.id, "was closed.");
 
   res.sendStatus(200);
+});
+
+app.get("/log/:lineNumber", (req, res) => {
+  const logLine = store.get(""+req.params.lineNumber);
+  if (logLine) {
+    res.send(logLine);
+  } else {
+    res.sendStatus(404);
+  }
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(port, () => {
-  console.log(`${serviceName} service listening on port ${port}`);
+  log(`${serviceName} service listening on port ${port}`);
 });
+
+const log = (message) => {
+  const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/Z/, '');
+  const messageWithTimestamp = "[" + timestamp + "] " + message;
+  console.info(messageWithTimestamp);
+  const n = store.get("logSize") ?? 0;
+  store.set("" + n, messageWithTimestamp);
+  store.set("logSize", n + 1);
+};
