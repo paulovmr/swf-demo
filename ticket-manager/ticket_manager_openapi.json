@@ -81,6 +81,29 @@
           }
         }
       }
+    },
+    "/log/{lineNumber}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "lineNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   }
 }
