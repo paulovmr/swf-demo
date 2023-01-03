@@ -26,8 +26,7 @@ app.post("/performanceData", (req, res) => {
           type: 'object',
           properties: {
             numberOfRunningPods: { type: 'integer' },
-            avgCpuLoad: { type: 'integer' },
-            avgMemoryUsage: { type: 'integer' }
+            avgLoad: { type: 'integer' }
           }
         }
       }
@@ -35,11 +34,10 @@ app.post("/performanceData", (req, res) => {
 
   const performanceData = {
     numberOfRunningPods: req.body.numberOfRunningPods,
-    avgCpuLoad: req.body.avgCpuLoad,
-    avgMemoryUsage: req.body.avgMemoryUsage,
+    avgLoad: req.body.avgLoad,
   };
 
-  log("Update - Pods: " + performanceData.numberOfRunningPods + ", CPU: " + performanceData.avgCpuLoad + "%" + ", Memory: " + performanceData.avgMemoryUsage + "%");
+  log("Update - Pods: " + performanceData.numberOfRunningPods + ", Load: " + performanceData.avgLoad + "%");
 
   const headers = {
     'content-type': 'application/json',

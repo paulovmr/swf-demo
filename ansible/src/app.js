@@ -50,7 +50,11 @@ app.post("/simulateUsers", (req, res) => {
     log("Active users: " + newNumberOfActiveUsers + ". Queue length: " + usersQueueLength + ".");
   }
 
-  res.sendStatus(200);
+  res.send({
+    numberOfPods: store.get("numberOfActivePods") ?? 1,
+    numberOfActiveUsers: store.get("numberOfActiveUsers") ?? 0,
+    usersQueueLength: store.get("usersQueueLength") ?? 0
+  });
 });
 
 app.post("/jobTemplate/:id", (req, res) => {

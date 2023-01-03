@@ -19,8 +19,7 @@ function App() {
 
     const [minActivePods, setMinActivePods] = useState(1);
     const [maxActivePods, setMaxActivePods] = useState(10);
-    const [avgCPULoadPerUser, setAvgCPULoadPerUser] = useState(40);
-    const [avgMemoryLoadPerUser, setAvgMemoryLoadPerUser] = useState(40);
+    const [avgLoadPerUser, setAvgLoadPerUser] = useState(40);
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 
@@ -93,17 +92,10 @@ function App() {
                                onMouseDown={stopPropagation} />
                     </label>
                     <label>
-                        Average CPU load per user:
+                        Average load per user:
                         <input type={"number"}
-                               value={avgCPULoadPerUser}
-                               onChange={event => handleInputChange(event, setAvgCPULoadPerUser)}
-                               onMouseDown={stopPropagation} />
-                    </label>
-                    <label>
-                        Average Memory load per user:
-                        <input type={"number"}
-                               value={avgMemoryLoadPerUser}
-                               onChange={event => handleInputChange(event, setAvgMemoryLoadPerUser)}
+                               value={avgLoadPerUser}
+                               onChange={event => handleInputChange(event, setAvgLoadPerUser)}
                                onMouseDown={stopPropagation} />
                     </label>
                     <label>
