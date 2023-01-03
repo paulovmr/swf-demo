@@ -1,4 +1,13 @@
-import React, {ChangeEvent, MouseEventHandler, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {
+    ChangeEvent,
+    MouseEvent,
+    MouseEventHandler,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState
+} from 'react';
 import './App.css';
 import Responsive, {Layout, WidthProvider} from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
@@ -15,7 +24,9 @@ const ANSIBLE = "ansible";
 const TICKET_MANAGER = "ticket-manager";
 
 function App() {
+    const [activePods, setActivePods] = useState(0);
     const [activeUsers, setActiveUsers] = useState(0);
+    const [queueLength, setQueueLength] = useState(0);
 
     const [minActivePods, setMinActivePods] = useState(1);
     const [maxActivePods, setMaxActivePods] = useState(10);
@@ -61,12 +72,33 @@ function App() {
   }], []);
 
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>, setMethod: (value: any) => void) => {
-    setMethod(event.target.value);
+      setMethod(event.target.value);
   }, []);
 
   const stopPropagation: MouseEventHandler = useCallback(event => {
       event.stopPropagation();
   }, []);
+
+  const addUsers = useCallback((event: MouseEvent, numberOfUsers: number) => {
+      event.preventDefault();
+      axios.post(ansibleUrl + "/simulateUsers", {
+          numberOfUsers: numberOfUsers
+      }).then(res => {
+          axios.post(monitoringUrl + "/performanceData", {
+              numberOfRunningPods: res.data.numberOfActivePods,
+              avgLoad: avgLoadPerUser * res.data.numberOfActiveUsers / res.data.numberOfPods
+          }).then(res => {
+              console.log("Performance data updated.");
+              setActivePods(res.data.numberOfPods);
+              setActiveUsers(res.data.numberOfActiveUsers);
+              setQueueLength(res.data.usersQueueLength);
+          }).catch(err => {
+              console.log("Failed to set performance data.", err);
+          });
+      }).catch(err => {
+          console.log("Failed to change number of users.", err);
+      });
+  }, [avgLoadPerUser, ansibleUrl, monitoringUrl]);
 
   return (
     <div className={"root"}>
@@ -104,7 +136,10 @@ function App() {
                                value={addedUsers}
                                onChange={event => handleInputChange(event, setAddedUsers)}
                                onMouseDown={stopPropagation} />
-                        <button>Add</button>
+                        <button onMouseDown={stopPropagation}
+                                onClick={event => addUsers(event, addedUsers)}>
+                            Add
+                        </button>
                     </label>
                     <label>
                         Simulate users leaving:
@@ -112,7 +147,10 @@ function App() {
                                value={removedUsers}
                                onChange={event => handleInputChange(event, setRemovedUsers)}
                                onMouseDown={stopPropagation} />
-                        <button>Remove</button>
+                        <button onMouseDown={stopPropagation}
+                                onClick={event => addUsers(event, -1 * removedUsers)}>
+                            Remove
+                        </button>
                     </label>
                 </form>
             </div>

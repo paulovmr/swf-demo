@@ -37,7 +37,7 @@ app.post("/simulateUsers", (req, res) => {
   const numberOfActiveUsers = store.get("numberOfActiveUsers") ?? 0;
 
   if (req.body.numberOfUsers > 0) {
-    const newUsersQueueLength = usersQueueLength + req.body.numberOfUsers;
+    const newUsersQueueLength = parseFloat(usersQueueLength) + parseFloat(req.body.numberOfUsers);
     store.set("usersQueueLength", newUsersQueueLength);
 
     log(req.body.numberOfUsers + " users were queued.");
