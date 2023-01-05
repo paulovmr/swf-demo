@@ -38,7 +38,7 @@ app.get("/action", (req, res) => {
     avgLoad: parseInt(req.query.avgLoad)
   };
 
-  log("[SWF-DEMO] Action inference requested - Pods: " + performanceData.numberOfRunningPods + " , Load: " + performanceData.avgLoad + "%");
+  log("Action inference requested - Pods: " + performanceData.numberOfRunningPods + " , Load: " + performanceData.avgLoad + "%");
 
   let inference = {
     action: "NO_ACTION_NEEDED",
@@ -75,7 +75,7 @@ app.get("/action", (req, res) => {
     };
   }
 
-  log("[SWF-DEMO] Action inference finished - Action:", inference.action, ", params:", inference.params);
+  log("Action inference finished - Action: " + inference.action + ", params: " + JSON.stringify(inference.params));
   res.send(inference);
 });
 

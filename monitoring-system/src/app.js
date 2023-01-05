@@ -33,8 +33,8 @@ app.post("/performanceData", (req, res) => {
    */
 
   const performanceData = {
-    numberOfRunningPods: req.body.numberOfRunningPods,
-    avgLoad: req.body.avgLoad,
+    numberOfRunningPods: ""+req.body.numberOfRunningPods,
+    avgLoad: ""+req.body.avgLoad,
   };
 
   log("Update - Pods: " + performanceData.numberOfRunningPods + ", Load: " + performanceData.avgLoad + "%");

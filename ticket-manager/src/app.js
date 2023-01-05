@@ -35,7 +35,7 @@ app.post("/ticket", (req, res) => {
    */
   const ticketId = uuidv4();
 
-  log("[SWF-DEMO] Ticked with id", ticketId, "was created with fields:", req.body);
+  log("Ticked with id " + ticketId + " was created with fields: " + JSON.stringify(req.body));
 
   res.status(201).send({
     ticketId: ticketId,
@@ -45,7 +45,7 @@ app.post("/ticket", (req, res) => {
 app.put("/ticket/:id", (req, res) => {
   // #swagger.operationId = 'updateTicket'
 
-  log("[SWF-DEMO] Ticked with id", req.params.id, "was updated with fields:", req.body);
+  log("Ticked with id " + req.params.id + " was updated with fields: " + JSON.stringify(req.body));
 
   res.sendStatus(204);
 });
@@ -54,7 +54,7 @@ app.delete("/ticket/:id", (req, res) => {
   // #swagger.operationId = 'closeTicket'
   // #swagger.parameters['id'] = { description: 'ID of the ticket to be closed' }
 
-  log("[SWF-DEMO] Ticked with id", req.params.id, "was closed.");
+  log("Ticked with id " + req.params.id + " was closed.");
 
   res.sendStatus(200);
 });
