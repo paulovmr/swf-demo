@@ -76,8 +76,11 @@
                     "action": {
                       "type": "string"
                     },
-                    "params": {
-                      "type": "object"
+                    "numberOfPods": {
+                      "type": "integer"
+                    },
+                    "numberOfUsers": {
+                      "type": "integer"
                     }
                   }
                 }

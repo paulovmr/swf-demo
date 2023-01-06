@@ -26,7 +26,8 @@ app.get("/action", (req, res) => {
               type: 'object',
               properties: {
                 action: { type: 'string' },
-                params: { type: 'object' }
+                numberOfPods: { type: 'integer' },
+                numberOfUsers: { type: 'integer' }
               }
             }
           }
@@ -65,7 +66,7 @@ app.get("/action", (req, res) => {
     };
   }
 
-  log("Action inference finished - Action: " + inference.action + ", params: " + JSON.stringify(inference.params));
+  log("Action inference finished - Action: " + JSON.stringify(inference));
   res.send(inference);
 });
 
