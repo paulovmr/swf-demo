@@ -79,7 +79,7 @@ app.post("/jobTemplate/:id", (req, res) => {
     parameters.numberOfUsers = req.body.numberOfUsers;
   }
 
-  log("Ansible job with id " + req.params.id + " triggered with parameters: " + JSON.stringify(parameters));
+  log("Ansible job with id " + req.params.id + " triggered with parameters: " + JSON.stringify(req.body));
 
   const numberOfActivePods = store.get("numberOfActivePods") ?? 1;
   const numberOfActiveUsers = store.get("numberOfActiveUsers") ?? 0;

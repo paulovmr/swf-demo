@@ -45,30 +45,23 @@ app.get("/action", (req, res) => {
   log("Action inference requested: " + JSON.stringify(performanceData));
 
   let inference = {
-    action: "NO_ACTION_NEEDED",
-    params: {}
+    action: "NO_ACTION_NEEDED"
   };
 
   if (performanceData.avgLoad > 90) {
     inference = {
       action: "SCALE_UP",
-      params: {
-        numberOfPods: 1,
-      }
+      numberOfPods: 1
     };
   } else if (performanceData.queueLength > 0) {
     inference = {
       action: "DEQUEUE_USERS",
-      params: {
-        numberOfUsers: Math.round(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser)),
-      },
+      numberOfUsers: Math.round(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser))
     };
   } else if (performanceData.numberOfRunningPods > 1 && performanceData.avgLoad < 50) {
     inference = {
       action: "SCALE_DOWN",
-      params: {
-        numberOfPods: 1,
-      },
+      numberOfPods: 1
     };
   }
 
