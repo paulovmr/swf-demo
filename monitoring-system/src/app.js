@@ -45,7 +45,7 @@ app.post("/performanceData", (req, res) => {
     queueLength: ""+req.body.queueLength,
   };
 
-  log("Update - Pods: " + performanceData.numberOfRunningPods + ", Load: " + performanceData.avgLoad + "%");
+  log("Updated data: " + JSON.stringify(performanceData));
 
   const headers = {
     'content-type': 'application/json',

@@ -24,7 +24,7 @@ const ANSIBLE = "ansible";
 const TICKET_MANAGER = "ticket-manager";
 
 function App() {
-    const [activePods, setActivePods] = useState(0);
+    const [activePods, setActivePods] = useState(1);
     const [activeUsers, setActiveUsers] = useState(0);
     const [queueLength, setQueueLength] = useState(0);
 
