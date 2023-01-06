@@ -90,9 +90,9 @@ function App() {
               avgLoadPerUser: avgLoadPerUser,
               minActivePods: minActivePods,
               maxActivePods: maxActivePods,
-              queueLength: queueLength,
+              queueLength: res.data.usersQueueLength,
               swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
-          }).then(res => {
+          }).then(_ => {
               console.log("Performance data updated.");
               setActivePods(res.data.numberOfPods);
               setActiveUsers(res.data.numberOfActiveUsers);
@@ -103,7 +103,7 @@ function App() {
       }).catch(err => {
           console.log("Failed to change number of users.", err);
       });
-  }, [avgLoadPerUser, ansibleUrl, monitoringUrl]);
+  }, [avgLoadPerUser, ansibleUrl, monitoringUrl, minActivePods, maxActivePods, queueLength]);
 
   return (
     <div className={"root"}>

@@ -60,7 +60,7 @@ app.get("/action", (req, res) => {
     inference = {
       action: "DEQUEUE_USERS",
       params: {
-        numberOfUsers: Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser),
+        numberOfUsers: Math.round(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser)),
       },
     };
   } else if (performanceData.numberOfRunningPods > 1 && performanceData.avgLoad < 50) {
