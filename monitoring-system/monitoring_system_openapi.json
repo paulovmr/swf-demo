@@ -42,6 +42,18 @@
                   },
                   "avgLoad": {
                     "type": "integer"
+                  },
+                  "avgLoadPerUser": {
+                    "type": "integer"
+                  },
+                  "minActivePods": {
+                    "type": "integer"
+                  },
+                  "maxActivePods": {
+                    "type": "integer"
+                  },
+                  "queueLength": {
+                    "type": "integer"
                   }
                 }
               }
@@ -54,6 +66,18 @@
                     "type": "integer"
                   },
                   "avgLoad": {
+                    "type": "integer"
+                  },
+                  "avgLoadPerUser": {
+                    "type": "integer"
+                  },
+                  "minActivePods": {
+                    "type": "integer"
+                  },
+                  "maxActivePods": {
+                    "type": "integer"
+                  },
+                  "queueLength": {
                     "type": "integer"
                   }
                 }

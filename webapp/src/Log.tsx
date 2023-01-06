@@ -30,9 +30,13 @@ function Log(props: Props) {
   useEffect(() => {
     const logPooling = setInterval(() => {
         axios.get(props.baseUrl + "/log/" + logSize).then(res => {
-            logRef.current!.value += res.data + '\n';
-            logRef.current!.scrollTop = logRef.current!.scrollHeight;
-            setLogSize(logSize + 1);
+            const lines = logRef.current!.value.split('\n');
+            const lastLine = lines[Math.max(lines.length - 2, 0)];
+            if (lastLine !== res.data) {
+                logRef.current!.value += res.data + '\n';
+                logRef.current!.scrollTop = logRef.current!.scrollHeight;
+                setLogSize(logSize + 1);
+            }
         }).catch(err => {
             console.log("No log updates.");
         });

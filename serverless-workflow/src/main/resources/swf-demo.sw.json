@@ -67,7 +67,10 @@
             "refName": "Check action on RHODS",
             "arguments": {
               "numberOfRunningPods": ".numberOfRunningPods",
-              "avgLoad": ".avgLoad"
+              "avgLoad": ".avgLoad",
+              "avgLoadPerUser": ".avgLoadPerUser",
+              "minActiveUsers": ".minActiveUsers",
+              "maxActiveUsers": ".maxActiveUsers"
             }
           }
         }

@@ -34,10 +34,10 @@ function App() {
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 
-    const [actionInferrerUrl, setActionInferrerUrl] = useState("http://localhost:3001");
-    const [ansibleUrl, setAnsibleUrl] = useState("http://localhost:3002");
-    const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3003");
-    const [ticketManagerUrl, setTicketManagerUrl] = useState("http://localhost:3004");
+    const [actionInferrerUrl, setActionInferrerUrl] = useState("https://action-inferrer-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
+    const [ansibleUrl, setAnsibleUrl] = useState("https://ansible-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
+    const [monitoringUrl, setMonitoringUrl] = useState("https://monitoring-system-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
+    const [ticketManagerUrl, setTicketManagerUrl] = useState("https://ticket-manager-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
 
   const layout: Layout[] = useMemo(() => [{
       i: EXECUTION_PARAMETERS,
@@ -85,8 +85,13 @@ function App() {
           numberOfUsers: numberOfUsers
       }).then(res => {
           axios.post(monitoringUrl + "/performanceData", {
-              numberOfRunningPods: res.data.numberOfActivePods,
-              avgLoad: avgLoadPerUser * res.data.numberOfActiveUsers / res.data.numberOfPods
+              numberOfRunningPods: res.data.numberOfPods,
+              avgLoad: avgLoadPerUser * res.data.numberOfActiveUsers / res.data.numberOfPods,
+              avgLoadPerUser: avgLoadPerUser,
+              minActivePods: minActivePods,
+              maxActivePods: maxActivePods,
+              queueLength: queueLength,
+              swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
           }).then(res => {
               console.log("Performance data updated.");
               setActivePods(res.data.numberOfPods);

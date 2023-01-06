@@ -35,7 +35,11 @@ app.get("/action", (req, res) => {
    */
   const performanceData = {
     numberOfRunningPods: parseInt(req.query.numberOfRunningPods),
-    avgLoad: parseInt(req.query.avgLoad)
+    avgLoad: parseInt(req.query.avgLoad),
+    avgLoadPerUser: parseInt(req.query.avgLoadPerUser),
+    minActivePods: parseInt(req.query.minActivePods),
+    maxActivePods: parseInt(req.query.maxActivePods),
+    queueLength: parseInt(req.query.queueLength)
   };
 
   log("Action inference requested - Pods: " + performanceData.numberOfRunningPods + " , Load: " + performanceData.avgLoad + "%");
@@ -49,21 +53,14 @@ app.get("/action", (req, res) => {
     inference = {
       action: "SCALE_UP",
       params: {
-        numberOfPods: 2,
-      }
-    };
-  } else if (performanceData.avgLoad > 80) {
-    inference = {
-      action: "SCALE_UP",
-      params: {
         numberOfPods: 1,
       }
     };
-  } else if (performanceData.numberOfRunningPods > 2 && performanceData.avgLoad < 30) {
+  } else if (performanceData.queueLength > 0) {
     inference = {
-      action: "SCALE_DOWN",
+      action: "DEQUEUE_USERS",
       params: {
-        numberOfPods: 2,
+        numberOfUsers: Math.min(performanceData.queueLength, performanceData.avgLoadPerUser * performanceData.queueLength / performanceData.numberOfRunningPods),
       },
     };
   } else if (performanceData.numberOfRunningPods > 1 && performanceData.avgLoad < 50) {

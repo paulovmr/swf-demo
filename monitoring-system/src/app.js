@@ -26,7 +26,11 @@ app.post("/performanceData", (req, res) => {
           type: 'object',
           properties: {
             numberOfRunningPods: { type: 'integer' },
-            avgLoad: { type: 'integer' }
+            avgLoad: { type: 'integer' },
+            avgLoadPerUser: { type: 'integer' },
+            minActivePods: { type: 'integer' },
+            maxActivePods: { type: 'integer' },
+            queueLength: { type: 'integer' }
           }
         }
       }
@@ -35,6 +39,10 @@ app.post("/performanceData", (req, res) => {
   const performanceData = {
     numberOfRunningPods: ""+req.body.numberOfRunningPods,
     avgLoad: ""+req.body.avgLoad,
+    avgLoadPerUser: ""+req.body.avgLoadPerUser,
+    minActivePods: ""+req.body.minActivePods,
+    maxActivePods: ""+req.body.maxActivePods,
+    queueLength: ""+req.body.queueLength,
   };
 
   log("Update - Pods: " + performanceData.numberOfRunningPods + ", Load: " + performanceData.avgLoad + "%");
