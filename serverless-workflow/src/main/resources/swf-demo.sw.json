@@ -112,9 +112,7 @@
             "refName": "Trigger Job Template on Ansible",
             "arguments": {
               "id": 1,
-              "extra_vars": {
-                "numberOfPods": ".numberOfPods"
-              }
+              "numberOfPods": ".numberOfPods"
             }
           }
         }
@@ -130,9 +128,7 @@
             "refName": "Trigger Job Template on Ansible",
             "arguments": {
               "id": 2,
-              "extra_vars": {
-                "numberOfPods": ".numberOfPods"
-              }
+              "numberOfPods": ".numberOfPods"
             }
           }
         }
@@ -148,9 +144,7 @@
             "refName": "Trigger Job Template on Ansible",
             "arguments": {
               "id": 3,
-              "extra_vars": {
-                "numberOfUsers": ".numberOfUsers"
-              }
+              "numberOfUsers": ".numberOfUsers"
             }
           }
         }
