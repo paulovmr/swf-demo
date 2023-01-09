@@ -57,6 +57,7 @@ metadata:
   name: action-inferrer
   namespace: paulovmr-dev
   labels:
+    app: action-inferrer
     app.kubernetes.io/component: action-inferrer
     app.kubernetes.io/instance: action-inferrer
     app.kubernetes.io/name: action-inferrer
@@ -150,6 +151,7 @@ metadata:
   name: ansible
   namespace: paulovmr-dev
   labels:
+    app: ansible
     app.kubernetes.io/component: ansible
     app.kubernetes.io/instance: ansible
     app.kubernetes.io/name: ansible
@@ -243,6 +245,7 @@ metadata:
   name: monitoring-system
   namespace: paulovmr-dev
   labels:
+    app: monitoring-system
     app.kubernetes.io/component: monitoring-system
     app.kubernetes.io/instance: monitoring-system
     app.kubernetes.io/name: monitoring-system
@@ -336,6 +339,7 @@ metadata:
   name: ticket-manager
   namespace: paulovmr-dev
   labels:
+    app: ticket-manager
     app.kubernetes.io/component: ticket-manager
     app.kubernetes.io/instance: ticket-manager
     app.kubernetes.io/name: ticket-manager
@@ -429,6 +433,7 @@ metadata:
   name: serverless-workflow
   namespace: paulovmr-dev
   labels:
+    app: serverless-workflow
     app.kubernetes.io/component: serverless-workflow
     app.kubernetes.io/instance: serverless-workflow
     app.kubernetes.io/name: serverless-workflow
