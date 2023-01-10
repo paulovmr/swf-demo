@@ -49,7 +49,9 @@ app.get("/action", (req, res) => {
     action: "NO_ACTION_NEEDED"
   };
 
-  if (performanceData.avgLoad > 90) {
+  const numberOfUsersToDequeue = Math.floor(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser));
+
+  if (performanceData.avgLoad > 90 || numberOfUsersToDequeue < 1) {
     inference = {
       action: "SCALE_UP",
       numberOfPods: 1
@@ -57,7 +59,7 @@ app.get("/action", (req, res) => {
   } else if (performanceData.queueLength > 0) {
     inference = {
       action: "DEQUEUE_USERS",
-      numberOfUsers: Math.round(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser))
+      numberOfUsers: numberOfUsersToDequeue
     };
   } else if (performanceData.numberOfRunningPods > 1 && performanceData.avgLoad < 50) {
     inference = {

@@ -4,7 +4,7 @@ import "react-grid-layout/css/styles.css";
 import axios from "axios";
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRefresh } from '@fortawesome/free-solid-svg-icons'
+import { faRefresh, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
     baseUrl: string;
@@ -13,7 +13,7 @@ interface Props {
 function Log(props: Props) {
   const logRef = useRef<HTMLTextAreaElement>(null);
 
-  library.add(faRefresh);
+  library.add(faRefresh, faTrash);
   dom.watch();
 
   const stopPropagation: MouseEventHandler = useCallback(event => {
@@ -23,6 +23,16 @@ function Log(props: Props) {
   const refresh = useCallback(() => {
     setLogSize(0);
     logRef.current!.value = "";
+  }, []);
+
+  const removeFirstLine = useCallback(() => {
+      let remainingLines = logRef.current!.value.split("\n");
+      remainingLines.shift();
+      logRef.current!.value = remainingLines.join("\n");
+  }, []);
+
+  const removeAllLines = useCallback(() => {
+      logRef.current!.value = "";
   }, []);
 
   const [logSize, setLogSize] = useState(0);
@@ -54,6 +64,7 @@ function Log(props: Props) {
 
   return (
     <div className={"log"}>
+        <i className={"remove"} onMouseDown={stopPropagation} onClick={removeFirstLine} onDoubleClick={removeAllLines}><FontAwesomeIcon icon="trash" /></i>
         <i className={"refresh"} onMouseDown={stopPropagation} onClick={refresh}><FontAwesomeIcon icon="refresh" /></i>
         <textarea ref={logRef} onMouseDown={stopPropagation}></textarea>
     </div>

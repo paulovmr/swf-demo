@@ -73,3 +73,9 @@ body {
   position: fixed;
   color: white;
 }
+
+.log .remove {
+  right: 80px;
+  position: fixed;
+  color: white;
+}
