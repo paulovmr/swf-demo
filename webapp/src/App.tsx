@@ -22,6 +22,7 @@ const MONITORING_SYSTEM = "monitoring-system";
 const ACTION_INFERRER = "action-inferrer";
 const ANSIBLE = "ansible";
 const TICKET_MANAGER = "ticket-manager";
+const WAITING_ROOM = "waiting-room";
 
 function App() {
     const [activePods, setActivePods] = useState(1);
@@ -38,6 +39,7 @@ function App() {
     const [ansibleUrl, setAnsibleUrl] = useState("https://ansible-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
     const [monitoringUrl, setMonitoringUrl] = useState("https://monitoring-system-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
     const [ticketManagerUrl, setTicketManagerUrl] = useState("https://ticket-manager-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
+    const [waitingRoomUrl, setWaitingRoomUrl] = useState("https://waiting-room-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
 
   const layout: Layout[] = useMemo(() => [{
       i: EXECUTION_PARAMETERS,
@@ -50,7 +52,13 @@ function App() {
       x: 0,
       y: 0,
       w: 6,
-      h: 20
+      h: 10
+  }, {
+      i: WAITING_ROOM,
+      x: 0,
+      y: 0,
+      w: 6,
+      h: 10
   }, {
       i: ACTION_INFERRER,
       x: 6,
@@ -81,7 +89,7 @@ function App() {
 
   const addUsers = useCallback((event: MouseEvent, numberOfUsers: number) => {
       event.preventDefault();
-      axios.post(ansibleUrl + "/simulateUsers", {
+      axios.post(waitingRoomUrl + "/simulateUsers", {
           numberOfUsers: numberOfUsers
       }).then(res => {
           axios.post(monitoringUrl + "/performanceData", {
@@ -165,6 +173,13 @@ function App() {
                     <Url currentUrl={monitoringUrl} urlChangedCallback={setMonitoringUrl}></Url>
                 </div>
                 <Log baseUrl={monitoringUrl}></Log>
+            </div>
+            <div key={WAITING_ROOM}>
+                <div className={"url"}>
+                    <h3>Waiting Room</h3>
+                    <Url currentUrl={waitingRoomUrl} urlChangedCallback={setWaitingRoomUrl}></Url>
+                </div>
+                <Log baseUrl={waitingRoomUrl}></Log>
             </div>
             <div key={ACTION_INFERRER}>
                 <div className={"url"}>
