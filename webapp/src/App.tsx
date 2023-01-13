@@ -91,22 +91,26 @@ function App() {
       event.preventDefault();
       axios.post(waitingRoomUrl + "/simulateUsers", {
           numberOfUsers: numberOfUsers
-      }).then(res => {
-          axios.post(monitoringUrl + "/performanceData", {
-              numberOfRunningPods: res.data.numberOfPods,
-              avgLoad: avgLoadPerUser * res.data.numberOfActiveUsers / res.data.numberOfPods,
-              avgLoadPerUser: avgLoadPerUser,
-              minActivePods: minActivePods,
-              maxActivePods: maxActivePods,
-              queueLength: res.data.usersQueueLength,
-              swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
-          }).then(_ => {
-              console.log("Performance data updated.");
-              setActivePods(res.data.numberOfPods);
-              setActiveUsers(res.data.numberOfActiveUsers);
-              setQueueLength(res.data.usersQueueLength);
+      }).then(waitingRoomRes => {
+          axios.get(ansibleUrl + "/numberOfActivePods", {}).then(ansibleRes => {
+              axios.post(monitoringUrl + "/performanceData", {
+                  numberOfRunningPods: ansibleRes.data.numberOfActivePods,
+                  avgLoad: avgLoadPerUser * waitingRoomRes.data.numberOfActiveUsers / ansibleRes.data.numberOfActivePods,
+                  avgLoadPerUser: avgLoadPerUser,
+                  minActivePods: minActivePods,
+                  maxActivePods: maxActivePods,
+                  queueLength: waitingRoomRes.data.usersQueueLength,
+                  swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
+              }).then(_ => {
+                  console.log("Performance data updated.");
+                  setActivePods(ansibleRes.data.numberOfActivePods);
+                  setActiveUsers(waitingRoomRes.data.numberOfActiveUsers);
+                  setQueueLength(waitingRoomRes.data.usersQueueLength);
+              }).catch(err => {
+                  console.log("Failed to set performance data.", err);
+              });
           }).catch(err => {
-              console.log("Failed to set performance data.", err);
+              console.log("Failed to change number of users.", err);
           });
       }).catch(err => {
           console.log("Failed to change number of users.", err);
