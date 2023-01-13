@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Ansible mock API",
+    "title": "Waiting room mock API",
     "version": "1.0.0",
     "description": ""
   },
@@ -17,21 +17,11 @@
         }
       }
     },
-    "/jobTemplate/{id}": {
+    "/simulateUsers": {
       "post": {
         "description": "",
-        "operationId": "triggerJobTemplate",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "description": "ID of the Job Template to be triggered"
-          }
-        ],
+        "operationId": "simulateUsers",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -44,7 +34,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "numberOfPods": {
+                  "numberOfUsers": {
                     "type": "integer"
                   }
                 }
@@ -54,7 +44,44 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "numberOfPods": {
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dequeueUsers": {
+      "post": {
+        "description": "",
+        "operationId": "dequeueUsers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfUsers": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "numberOfUsers": {
                     "type": "integer"
                   }
                 }

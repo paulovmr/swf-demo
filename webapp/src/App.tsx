@@ -168,7 +168,7 @@ function App() {
             </div>
             <div key={ACTION_INFERRER}>
                 <div className={"url"}>
-                    <h3>Action Inferrer</h3>
+                    <h3>RHODS</h3>
                     <Url currentUrl={actionInferrerUrl} urlChangedCallback={setActionInferrerUrl}></Url>
                 </div>
                 <Log baseUrl={actionInferrerUrl}></Log>

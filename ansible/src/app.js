@@ -17,43 +17,6 @@ app.get("/", (_req, res) => {
   res.send(`Hello from "${serviceName}" service`);
 });
 
-app.post("/simulateUsers", (req, res) => {
-  // #swagger.operationId = 'simulateUsers'
-  /*  #swagger.requestBody = {
-        required: true,
-        schema: {
-          type: 'object',
-          properties: {
-            numberOfUsers: { type: 'integer' }
-          }
-        }
-      }
-   */
-
-  const usersQueueLength = store.get("usersQueueLength") ?? 0;
-  const numberOfActiveUsers = store.get("numberOfActiveUsers") ?? 0;
-
-  if (req.body.numberOfUsers > 0) {
-    const newUsersQueueLength = parseFloat(usersQueueLength) + parseFloat(req.body.numberOfUsers);
-    store.set("usersQueueLength", newUsersQueueLength);
-
-    log(req.body.numberOfUsers + " users were queued.");
-    log("Active users: " + numberOfActiveUsers + ". Queue length: " + newUsersQueueLength + ".");
-  } else if (req.body.numberOfUsers < 0) {
-    const newNumberOfActiveUsers = Math.max(numberOfActiveUsers + req.body.numberOfUsers, 0);
-    store.set("numberOfActiveUsers", newNumberOfActiveUsers);
-
-    log(numberOfActiveUsers - newNumberOfActiveUsers + " users left.");
-    log("Active users: " + newNumberOfActiveUsers + ". Queue length: " + usersQueueLength + ".");
-  }
-
-  res.send({
-    numberOfPods: store.get("numberOfActivePods") ?? 1,
-    numberOfActiveUsers: store.get("numberOfActiveUsers") ?? 0,
-    usersQueueLength: store.get("usersQueueLength") ?? 0
-  });
-});
-
 app.post("/jobTemplate/:id", (req, res) => {
   // #swagger.operationId = 'triggerJobTemplate'
   // #swagger.parameters['id'] = { schema: { type: 'integer' }, description: 'ID of the Job Template to be triggered' }
@@ -62,8 +25,7 @@ app.post("/jobTemplate/:id", (req, res) => {
         schema: {
           type: 'object',
           properties: {
-            numberOfPods: { type: 'integer' },
-            numberOfUsers: { type: 'integer' }
+            numberOfPods: { type: 'integer' }
           }
         }
       }
@@ -75,15 +37,9 @@ app.post("/jobTemplate/:id", (req, res) => {
     parameters.numberOfPods = req.body.numberOfPods;
   }
 
-  if (req.body.numberOfUsers) {
-    parameters.numberOfUsers = req.body.numberOfUsers;
-  }
-
   log("Ansible job with id " + req.params.id + " triggered with parameters: " + JSON.stringify(req.body));
 
   const numberOfActivePods = store.get("numberOfActivePods") ?? 1;
-  const numberOfActiveUsers = store.get("numberOfActiveUsers") ?? 0;
-  const usersQueueLength = store.get("usersQueueLength") ?? 0;
 
   if (req.params.id === "1") {
     store.set("numberOfActivePods", numberOfActivePods + parameters.numberOfPods);
@@ -92,15 +48,11 @@ app.post("/jobTemplate/:id", (req, res) => {
     const numberOfPodsToDecrease = Math.min(parameters.numberOfPods, numberOfActivePods);
     store.set("numberOfActivePods", numberOfActivePods - numberOfPodsToDecrease);
     log("Number of pods decreased by " + numberOfPodsToDecrease + ". Number of active pods: " + store.get("numberOfActivePods"));
-  } else if (req.params.id === "3") {
-    const numberOfUsersToDequeue = Math.min(parameters.numberOfUsers, usersQueueLength);
-    store.set("numberOfActiveUsers", numberOfActiveUsers + numberOfUsersToDequeue);
-    store.set("usersQueueLength", usersQueueLength - numberOfUsersToDequeue);
-    log("Users dequeued by " + numberOfUsersToDequeue);
-    log("Active users: " + store.get("numberOfActiveUsers") + ". Queue length: " + store.get("usersQueueLength") + ".");
   }
 
-  res.sendStatus(200);
+  res.send({
+    numberOfActivePods: store.get("numberOfActivePods") ?? 0
+  });
 });
 
 app.get("/log/:lineNumber", (req, res) => {
