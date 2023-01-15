@@ -55,10 +55,12 @@ function Log(props: Props) {
                     newFullLog.push(...newLog);
                 }
             });
-            newFullLog.sort();
-            logRef.current!.value += newFullLog.join("\n");
-            logRef.current!.scrollTop = logRef.current!.scrollHeight;
-            setLogSize(newLogSize);
+            if (newFullLog.length > 0) {
+                newFullLog.sort();
+                logRef.current!.value += newFullLog.join("\n");
+                logRef.current!.scrollTop = logRef.current!.scrollHeight;
+                setLogSize(newLogSize);
+            }
         }).catch(err => console.log("error"));
     }, 1000);
 
