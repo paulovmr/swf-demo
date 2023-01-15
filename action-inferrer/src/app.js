@@ -7,7 +7,7 @@ const store = require('store');
 const swaggerFile = require("../action_inferrer_openapi.json");
 const app = express();
 const port = process.env.PORT ?? 3001;
-const serviceName = "action-inferrer";
+const serviceName = "rhods";
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -73,12 +73,17 @@ app.get("/action", (req, res) => {
 });
 
 app.get("/log/:lineNumber", (req, res) => {
-  const logLine = store.get(""+req.params.lineNumber);
-  if (logLine) {
-    res.send(logLine);
-  } else {
-    res.sendStatus(404);
-  }
+  let result = "";
+  let lineNumber = req.params.lineNumber;
+  let logLine;
+  do {
+    logLine = store.get(""+lineNumber++);
+    if (logLine) {
+      result += logLine + "\n";
+    }
+  } while (logLine);
+
+  res.send(result);
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));

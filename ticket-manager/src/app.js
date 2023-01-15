@@ -60,12 +60,17 @@ app.delete("/ticket/:id", (req, res) => {
 });
 
 app.get("/log/:lineNumber", (req, res) => {
-  const logLine = store.get(""+req.params.lineNumber);
-  if (logLine) {
-    res.send(logLine);
-  } else {
-    res.sendStatus(404);
-  }
+  let result = "";
+  let lineNumber = req.params.lineNumber;
+  let logLine;
+  do {
+    logLine = store.get(""+lineNumber++);
+    if (logLine) {
+      result += logLine + "\n";
+    }
+  } while (logLine);
+
+  res.send(result);
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));

@@ -4,9 +4,9 @@ const swaggerUi = require("swagger-ui-express");
 const cors = require("cors");
 const store = require('store');
 
-const swaggerFile = require("../ansible_openapi.json");
+const swaggerFile = require("../waiting_room_openapi.json");
 const app = express();
-const port = process.env.PORT ?? 3002;
+const port = process.env.PORT ?? 3005;
 const serviceName = "waiting-room";
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -89,12 +89,17 @@ app.post("/dequeueUsers", (req, res) => {
 });
 
 app.get("/log/:lineNumber", (req, res) => {
-  const logLine = store.get(""+req.params.lineNumber);
-  if (logLine) {
-    res.send(logLine);
-  } else {
-    res.sendStatus(404);
-  }
+  let result = "";
+  let lineNumber = req.params.lineNumber;
+  let logLine;
+  do {
+    logLine = store.get(""+lineNumber++);
+    if (logLine) {
+      result += logLine + "\n";
+    }
+  } while (logLine);
+
+  res.send(result);
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));

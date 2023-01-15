@@ -7,8 +7,16 @@ body {
   width: 100%;
 }
 
+#root > div {
+  padding: 0px !important;
+}
+
+#root div.react-grid-layout {
+  padding: 0px;
+}
+
 #root div {
-  padding: 20px;
+  padding: 15px;
 }
 
 .react-grid-item {

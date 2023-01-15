@@ -7,10 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRefresh, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
-    baseUrl: string;
+    labelsByUrl: Map<string, string>;
 }
 
 function Log(props: Props) {
+  const [logSize, setLogSize] = useState(new Map(Array.from(props.labelsByUrl.values()).map(label => [label, 0])));
+
   const logRef = useRef<HTMLTextAreaElement>(null);
 
   library.add(faRefresh, faTrash);
@@ -21,8 +23,8 @@ function Log(props: Props) {
   }, []);
 
   const refresh = useCallback(() => {
-    setLogSize(0);
-    logRef.current!.value = "";
+      logRef.current!.value = "";
+      setLogSize(new Map(Array.from(props.labelsByUrl.values()).map(label => [label, 0])));
   }, []);
 
   const removeFirstLine = useCallback(() => {
@@ -35,32 +37,35 @@ function Log(props: Props) {
       logRef.current!.value = "";
   }, []);
 
-  const [logSize, setLogSize] = useState(0);
-
   useEffect(() => {
     const logPooling = setInterval(() => {
-        axios.get(props.baseUrl + "/log/" + logSize).then(res => {
-            const lines = logRef.current!.value.split('\n');
-            const lastLine = lines[Math.max(lines.length - 2, 0)];
-            if (lastLine !== res.data) {
-                logRef.current!.value += res.data + '\n';
-                logRef.current!.scrollTop = logRef.current!.scrollHeight;
-                setLogSize(logSize + 1);
-            }
-        }).catch(err => {
-            console.log("No log updates.");
-        });
-    }, 300);
+        const requests = Array.from(props.labelsByUrl.keys()).map((path) =>
+            axios.get(path + "/log/" + logSize.get(props.labelsByUrl.get(path)!))
+        );
+
+        Promise.allSettled(requests).then((responses) => {
+            const newLogSize = new Map(logSize);
+            let newFullLog: string[] = [];
+            responses.forEach((res) => {
+                if (res.status === "fulfilled") {
+                    const entry = Array.from(props.labelsByUrl.entries()).filter(v => res.value.config.url?.startsWith(v[0]))[0]
+                    const labelledLog = props.labelsByUrl.size > 1 ? (""+res.value.data).replaceAll("] ", "] | " + entry[1].padEnd(14) + " | ") : (""+res.value.data);
+                    const newLog = labelledLog.split("\n").filter(l => l !== "");
+                    newLogSize.set(entry[1], logSize.get(entry[1])! + newLog.length);
+                    newFullLog.push(...newLog);
+                }
+            });
+            newFullLog.sort();
+            logRef.current!.value += newFullLog.join("\n");
+            logRef.current!.scrollTop = logRef.current!.scrollHeight;
+            setLogSize(newLogSize);
+        }).catch(err => console.log("error"));
+    }, 1000);
 
     return () => {
         clearInterval(logPooling);
     }
-  }, [logSize, logRef, props.baseUrl]);
-
-  useEffect(() => {
-      logRef.current!.value = "";
-      setLogSize(0);
-  }, [props.baseUrl]);
+  }, [logSize, logRef, props.labelsByUrl]);
 
   return (
     <div className={"log"}>
