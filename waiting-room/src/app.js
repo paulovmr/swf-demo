@@ -40,7 +40,7 @@ app.post("/simulateUsers", (req, res) => {
     log(req.body.numberOfUsers + " users were queued.");
     log("Active users: " + numberOfActiveUsers + ". Queue length: " + newUsersQueueLength + ".");
   } else if (req.body.numberOfUsers < 0) {
-    const newNumberOfActiveUsers = Math.max(numberOfActiveUsers + req.body.numberOfUsers, 0);
+    const newNumberOfActiveUsers = Math.max(parseFloat(numberOfActiveUsers) + parseFloat(req.body.numberOfUsers), 0);
     store.set("numberOfActiveUsers", newNumberOfActiveUsers);
 
     log(numberOfActiveUsers - newNumberOfActiveUsers + " users left.");
