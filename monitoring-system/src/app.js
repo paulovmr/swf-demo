@@ -74,10 +74,10 @@ app.get("/log/:lineNumber", (req, res) => {
   const logSize = store.get("logSize") ?? 0;
   do {
     logLine = store.get(""+lineNumber++);
-    if (logLine) {
+    if (logLine && lineNumber <= logSize) {
       result += logLine + "\n";
     }
-  } while (logLine && lineNumber < logSize);
+  } while (logLine && lineNumber <= logSize);
 
   res.send(result);
 });

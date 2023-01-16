@@ -57,7 +57,7 @@ function Log(props: Props) {
             });
             if (newFullLog.length > 0) {
                 newFullLog.sort();
-                logRef.current!.value += newFullLog.join("\n");
+                logRef.current!.value += newFullLog.join("\n") + "\n";
                 logRef.current!.scrollTop = logRef.current!.scrollHeight;
                 setLogSize(newLogSize);
             }

@@ -182,9 +182,10 @@ function App() {
           axios.post(url + "/reset").then(res => {
               console.log(url + " resetted.");
           }).catch(err => {
-              console.log("Error while resseting " + url, err);
+              console.log("Error while reseting " + url, err);
           })
       });
+      window.location.reload();
   }, [ansibleUrl, monitoringUrl, actionInferrerUrl, waitingRoomUrl, ticketManagerUrl]);
 
   return (
