@@ -91,3 +91,7 @@ body {
   position: fixed;
   color: white;
 }
+
+img {
+  width: 100%;
+}

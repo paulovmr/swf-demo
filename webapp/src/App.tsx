@@ -14,6 +14,8 @@ import "react-grid-layout/css/styles.css";
 import axios from "axios";
 import Log from "./Log";
 import Url from "./Url";
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -205,7 +207,7 @@ function App() {
                                    onChange={event => handleCheckboxChange(event, setViewUnifiedLog)}
                                    onMouseDown={stopPropagation} />
                         </label>
-                        <label>
+                        {/*<label>
                             Minimum active pods:
                             <input type={"number"}
                                    value={minActivePods}
@@ -218,7 +220,7 @@ function App() {
                                    value={maxActivePods}
                                    onChange={event => handleInputChange(event, setMaxActivePods)}
                                    onMouseDown={stopPropagation} />
-                        </label>
+                        </label>*/}
                         <label>
                             Average load per user:
                             <input type={"number"}
@@ -277,6 +279,12 @@ function App() {
                                 Reset All
                             </button>
                         </label>
+                        <Popup trigger={<button type="button" onMouseDown={stopPropagation}>View waiting room architecture</button>} modal>
+                            <div><img src={process.env.PUBLIC_URL + '/swf-demo.svg'} /></div>
+                        </Popup>
+                        <Popup trigger={<button type="button" onMouseDown={stopPropagation}>View Serverless Workflow diagram</button>} modal>
+                            <div><img src={process.env.PUBLIC_URL + '/waiting_room.jpg'} /></div>
+                        </Popup>
                     </form>
                 </div>
             </div>

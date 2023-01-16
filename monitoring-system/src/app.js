@@ -55,14 +55,14 @@ app.post("/performanceData", (req, res) => {
     'ce-id': '12346',
   }
 
-  log("Cloud event requested");
+  log("Cloud event triggered");
   axios.post(req.body.swfDeployUrl, performanceData, {
     headers: headers
   }).then(_res => {
-    log("Cloud event triggered sucessfully");
+    log("Cloud event handled");
     res.sendStatus(204);
   }).catch(error => {
-    log("Cloud event failed to be triggered: " + error);
+    log("Cloud event failed to be handled: " + error);
     res.sendStatus(500);
   });
 });
