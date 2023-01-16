@@ -68,8 +68,8 @@ app.post("/dequeueUsers", (req, res) => {
 
   let parameters = {};
 
-  if (req.body.numberOfPods) {
-    parameters.numberOfPods = req.body.numberOfPods;
+  if (req.body.numberOfUsers) {
+    parameters.numberOfUsers = req.body.numberOfUsers;
   }
 
   const numberOfActiveUsers = store.get("numberOfActiveUsers") ?? 0;
