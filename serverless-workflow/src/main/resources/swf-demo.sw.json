@@ -13,7 +13,7 @@
     },
     {
       "name": "Dequeue users on Waiting room",
-      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/waiting-room/waiting-room_openapi.json#dequeueUsers",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/waiting-room/waiting_room_openapi.json#dequeueUsers",
       "type": "rest"
     },
     {
