@@ -122,7 +122,7 @@
           }
         }
       ],
-      "transition": "CheckAction"
+      "transition": "CloseTicket"
     },
     {
       "name": "ScaleDown",
