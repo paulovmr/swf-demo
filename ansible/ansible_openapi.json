@@ -64,6 +64,17 @@
         }
       }
     },
+    "/numbers": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/log/{lineNumber}": {
       "get": {
         "description": "",
@@ -80,11 +91,15 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "404": {
-            "description": "Not Found"
           }
         }
+      }
+    },
+    "/reset": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     }
   }
