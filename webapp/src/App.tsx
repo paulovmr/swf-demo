@@ -41,17 +41,17 @@ function App() {
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 
-    /*const [actionInferrerUrl, setActionInferrerUrl] = useState("https://action-inferrer-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
+    const [actionInferrerUrl, setActionInferrerUrl] = useState("https://action-inferrer-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
     const [ansibleUrl, setAnsibleUrl] = useState("https://ansible-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
     const [monitoringUrl, setMonitoringUrl] = useState("https://monitoring-system-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
     const [ticketManagerUrl, setTicketManagerUrl] = useState("https://ticket-manager-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-    const [waitingRoomUrl, setWaitingRoomUrl] = useState("https://waiting-room-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");*/
+    const [waitingRoomUrl, setWaitingRoomUrl] = useState("https://waiting-room-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
 
-    const [actionInferrerUrl, setActionInferrerUrl] = useState("http://localhost:3001");
+    /*const [actionInferrerUrl, setActionInferrerUrl] = useState("http://localhost:3001");
     const [ansibleUrl, setAnsibleUrl] = useState("http://localhost:3002");
     const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3003");
     const [ticketManagerUrl, setTicketManagerUrl] = useState("http://localhost:3004");
-    const [waitingRoomUrl, setWaitingRoomUrl] = useState("http://localhost:3005");
+    const [waitingRoomUrl, setWaitingRoomUrl] = useState("http://localhost:3005");*/
 
   const layout: Layout[] = useMemo(() => {
       if (viewUnifiedLog) {
@@ -152,7 +152,7 @@ function App() {
                   minActivePods: minActivePods,
                   maxActivePods: maxActivePods,
                   queueLength: waitingRoomRes.data.usersQueueLength,
-                  swfDeployUrl: "a"//https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
+                  swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
               }).then(_ => {
                   axios.get(ansibleUrl + "/numbers", {}).then(ansibleNumbers => {
                       setActivePods(ansibleNumbers.data.numberOfActivePods);

@@ -12,6 +12,11 @@
       "type": "rest"
     },
     {
+      "name": "Dequeue users on Waiting room",
+      "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/waiting-room/waiting-room_openapi.json#dequeueUsers",
+      "type": "rest"
+    },
+    {
       "name": "Check action on RHODS",
       "operation": "https://raw.githubusercontent.com/paulovmr/swf-demo/main/action-inferrer/action_inferrer_openapi.json#getAction",
       "type": "rest"
@@ -141,9 +146,8 @@
       "actions": [
         {
           "functionRef": {
-            "refName": "Trigger Job Template on Ansible",
+            "refName": "Dequeue users on Waiting room",
             "arguments": {
-              "id": 3,
               "numberOfUsers": ".numberOfUsers"
             }
           }
