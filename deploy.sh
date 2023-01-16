@@ -9,7 +9,7 @@
 
 oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER
 
-APPS=("action-inferrer" "ansible" "monitoring-system" "ticket-manager" "waiting-room" "serverless-workflow")
+APPS=("action-inferrer" "ansible" "monitoring-system" "ticket-manager" "waiting-room" "webapp" "serverless-workflow")
 
 echo -e "\nCreating the deploy template..."
 if oc get template/deploy-swf-demo-template >/dev/null 2>&1; then
