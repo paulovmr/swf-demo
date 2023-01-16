@@ -1,10 +1,10 @@
 {
-  "id": "swf_demo",
+  "id": "waiting-room",
   "version": "1.0",
   "specVersion": "0.8",
-  "name": "SWF Demo",
-  "description": "SWF Demo",
-  "start": "NotifyStart",
+  "name": "Waiting Room",
+  "description": "Waiting Room",
+  "start": "Notify Start",
   "functions": [
     {
       "name": "Trigger Job Template on Ansible",
@@ -41,17 +41,17 @@
   ],
   "states": [
     {
-      "name": "NotifyStart",
+      "name": "Notify Start",
       "type": "event",
       "onEvents": [
         {
           "eventRefs": ["StartEvent"]
         }
       ],
-      "transition": "CreateTicket"
+      "transition": "Create ticket on ServiceNow"
     },
     {
-      "name": "CreateTicket",
+      "name": "Create ticket on ServiceNow",
       "type": "operation",
       "actions": [
         {
@@ -61,10 +61,10 @@
           }
         }
       ],
-      "transition": "CheckAction"
+      "transition": "Check Action on RHODS"
     },
     {
-      "name": "CheckAction",
+      "name": "Check Action on RHODS",
       "type": "operation",
       "actions": [
         {
@@ -81,27 +81,27 @@
           }
         }
       ],
-      "transition": "ChooseOnAction"
+      "transition": "Execute action"
     },
     {
-      "name": "ChooseOnAction",
+      "name": "Execute action",
       "type": "switch",
       "dataConditions": [
         {
           "condition": "${ .action == \"SCALE_UP\" }",
-          "transition": "ScaleUp"
+          "transition": "Scale up on Ansible"
         },
         {
           "condition": "${ .action == \"SCALE_DOWN\" }",
-          "transition": "ScaleDown"
+          "transition": "Scale down on Ansible"
         },
         {
           "condition": "${ .action == \"DEQUEUE_USERS\" }",
-          "transition": "DequeueUsers"
+          "transition": "Dequeue users on Waiting Room"
         },
         {
           "condition": "${ .action == \"TRIGGER_WORKFLOW\" }",
-          "transition": "TriggerWorkflow"
+          "transition": "Trigger another workflow"
         }
       ],
       "defaultCondition": {
@@ -109,7 +109,7 @@
       }
     },
     {
-      "name": "ScaleUp",
+      "name": "Scale up on Ansible",
       "type": "operation",
       "actions": [
         {
@@ -122,10 +122,10 @@
           }
         }
       ],
-      "transition": "CloseTicket"
+      "transition": "Close ticket on ServiceNow"
     },
     {
-      "name": "ScaleDown",
+      "name": "Scale down on Ansible",
       "type": "operation",
       "actions": [
         {
@@ -138,10 +138,10 @@
           }
         }
       ],
-      "transition": "CloseTicket"
+      "transition": "Close ticket on ServiceNow"
     },
     {
-      "name": "DequeueUsers",
+      "name": "Dequeue users on Waiting Room",
       "type": "operation",
       "actions": [
         {
@@ -153,20 +153,20 @@
           }
         }
       ],
-      "transition": "CloseTicket"
+      "transition": "Close ticket on ServiceNow"
     },
     {
-      "name": "TriggerWorkflow",
+      "name": "Trigger another workflow",
       "type": "operation",
       "actions": [
         {
           "subFlowRef": "jsongreet"
         }
       ],
-      "transition": "CloseTicket"
+      "transition": "Close ticket on ServiceNow"
     },
     {
-      "name": "CloseTicket",
+      "name": "Close ticket on ServiceNow",
       "type": "operation",
       "end": true,
       "actions": [

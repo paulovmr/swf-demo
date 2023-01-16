@@ -280,10 +280,10 @@ function App() {
                             </button>
                         </label>
                         <Popup trigger={<button type="button" onMouseDown={stopPropagation}>View waiting room architecture</button>} modal>
-                            <div><img src={process.env.PUBLIC_URL + '/waiting_room.jpg'} /></div>
+                            <div><img src={process.env.PUBLIC_URL + '/architecture.jpg'} /></div>
                         </Popup>
                         <Popup trigger={<button type="button" onMouseDown={stopPropagation}>View Serverless Workflow diagram</button>} modal>
-                            <div><img src={process.env.PUBLIC_URL + '/architecture.svg'} /></div>
+                            <div><img src={process.env.PUBLIC_URL + '/waiting-room.svg'} /></div>
                         </Popup>
                     </form>
                 </div>
