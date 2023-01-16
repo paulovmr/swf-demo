@@ -154,6 +154,17 @@ function App() {
       });
   }, [avgLoadPerUser, ansibleUrl, monitoringUrl, minActivePods, maxActivePods, queueLength]);
 
+  const reset = useCallback((event: MouseEvent) => {
+      event.preventDefault();
+      [ansibleUrl, monitoringUrl, actionInferrerUrl, waitingRoomUrl, ticketManagerUrl].forEach(url => {
+          axios.post(url + "/reset").then(res => {
+              console.log(url + " resetted.");
+          }).catch(err => {
+              console.log("Error while resseting " + url, err);
+          })
+      });
+  }, [ansibleUrl, monitoringUrl, actionInferrerUrl, waitingRoomUrl, ticketManagerUrl]);
+
   return (
     <div className={"root"}>
         <ResponsiveGridLayout layout={layout}
@@ -212,6 +223,12 @@ function App() {
                             <button onMouseDown={stopPropagation}
                                     onClick={event => addUsers(event, -1 * removedUsers)}>
                                 Remove
+                            </button>
+                        </label>
+                        <label>
+                            <button onMouseDown={stopPropagation}
+                                    onClick={reset}>
+                                Reset All
                             </button>
                         </label>
                     </form>

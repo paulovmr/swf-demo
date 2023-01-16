@@ -65,14 +65,20 @@ app.get("/log/:lineNumber", (req, res) => {
   let result = "";
   let lineNumber = req.params.lineNumber;
   let logLine;
+  const logSize = store.get("logSize") ?? 0;
   do {
     logLine = store.get(""+lineNumber++);
     if (logLine) {
       result += logLine + "\n";
     }
-  } while (logLine);
+  } while (logLine && lineNumber < logSize);
 
   res.send(result);
+});
+
+app.post("/reset", (req, res) => {
+  store.set("logSize", 0);
+  store.set("numberOfActivePods", 1);
 });
 
 app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerFile));
