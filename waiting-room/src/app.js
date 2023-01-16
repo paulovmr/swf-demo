@@ -103,6 +103,13 @@ app.get("/log/:lineNumber", (req, res) => {
   res.send(result);
 });
 
+app.get("/numbers", (req, res) => {
+  res.send({
+    numberOfActiveUsers: store.get("numberOfActiveUsers") ?? 0,
+    usersQueueLength: store.get("usersQueueLength") ?? 0
+  });
+});
+
 app.post("/reset", (req, res) => {
   store.set("logSize", 0);
   store.set("numberOfActiveUsers", 0);

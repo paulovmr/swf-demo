@@ -55,9 +55,13 @@ body {
 
 .log textarea {
   width: 100%;
-  height: 150px;
+  height: 260px;
   color: white;
   background-color: black;
+}
+
+.large-log .log textarea {
+  height: 660px;
 }
 
 .url {

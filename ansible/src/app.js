@@ -17,12 +17,6 @@ app.get("/", (_req, res) => {
   res.send(`Hello from "${serviceName}" service`);
 });
 
-app.get("/numberOfActivePods", (_req, res) => {
-  res.send({
-    numberOfActivePods: store.get("numberOfActivePods") ?? 1
-  });
-});
-
 app.post("/jobTemplate/:id", (req, res) => {
   // #swagger.operationId = 'triggerJobTemplate'
   // #swagger.parameters['id'] = { schema: { type: 'integer' }, description: 'ID of the Job Template to be triggered' }
@@ -58,6 +52,12 @@ app.post("/jobTemplate/:id", (req, res) => {
 
   res.send({
     numberOfActivePods: store.get("numberOfActivePods") ?? 0
+  });
+});
+
+app.get("/numbers", (req, res) => {
+  res.send({
+    numberOfActivePods: store.get("numberOfActivePods") ?? 1
   });
 });
 

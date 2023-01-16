@@ -36,6 +36,7 @@ app.post("/ticket", (req, res) => {
   const ticketId = uuidv4();
 
   log("Ticked with id " + ticketId + " was created with fields: " + JSON.stringify(req.body));
+  store.set("numberOfOpenedTickets", 1 + (store.get("numberOfOpenedTickets") ?? 0));
 
   res.status(201).send({
     ticketId: ticketId,
@@ -55,8 +56,16 @@ app.delete("/ticket/:id", (req, res) => {
   // #swagger.parameters['id'] = { description: 'ID of the ticket to be closed' }
 
   log("Ticked with id " + req.params.id + " was closed.");
+  store.set("numberOfClosedTickets", 1 + (store.get("numberOfClosedTickets") ?? 0));
 
   res.sendStatus(200);
+});
+
+app.get("/numbers", (req, res) => {
+  res.send({
+    numberOfOpenedTickets: store.get("numberOfOpenedTickets") ?? 0,
+    numberOfClosedTickets: store.get("numberOfClosedTickets") ?? 0
+  });
 });
 
 app.get("/log/:lineNumber", (req, res) => {

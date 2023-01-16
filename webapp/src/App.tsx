@@ -18,6 +18,7 @@ import Url from "./Url";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const EXECUTION_PARAMETERS = "execution-parameters";
+const RUNTIME_STATUS = "runtime-status";
 const MONITORING_SYSTEM = "monitoring-system";
 const ACTION_INFERRER = "action-inferrer";
 const ANSIBLE = "ansible";
@@ -30,6 +31,8 @@ function App() {
     const [activePods, setActivePods] = useState(1);
     const [activeUsers, setActiveUsers] = useState(0);
     const [queueLength, setQueueLength] = useState(0);
+    const [ticketsOpened, setTicketsOpened] = useState(0);
+    const [ticketsClosed, setTicketsClosed] = useState(0);
 
     const [viewUnifiedLog, setViewUnifiedLog] = useState(false);
     const [minActivePods, setMinActivePods] = useState(1);
@@ -56,7 +59,13 @@ function App() {
               i: EXECUTION_PARAMETERS,
               x: 0,
               y: 0,
-              w: 6,
+              w: 4,
+              h: 10
+          }, {
+              i: RUNTIME_STATUS,
+              x: 4,
+              y: 0,
+              w: 2,
               h: 10
           }, {
               i: GLOBAL_CONFIG,
@@ -67,7 +76,7 @@ function App() {
           }, {
               i: GLOBAL_LOG,
               x: 0,
-              y: 6,
+              y: 10,
               w: 12,
               h: 20
           }];
@@ -76,18 +85,24 @@ function App() {
               i: EXECUTION_PARAMETERS,
               x: 0,
               y: 0,
-              w: 6,
+              w: 4,
+              h: 10
+          }, {
+              i: RUNTIME_STATUS,
+              x: 4,
+              y: 0,
+              w: 2,
               h: 10
           }, {
               i: MONITORING_SYSTEM,
               x: 0,
-              y: 0,
+              y: 10,
               w: 6,
               h: 10
           }, {
               i: ACTION_INFERRER,
               x: 0,
-              y: 0,
+              y: 20,
               w: 6,
               h: 10
           }, {
@@ -129,7 +144,7 @@ function App() {
       axios.post(waitingRoomUrl + "/simulateUsers", {
           numberOfUsers: numberOfUsers
       }).then(waitingRoomRes => {
-          axios.get(ansibleUrl + "/numberOfActivePods", {}).then(ansibleRes => {
+          axios.get(ansibleUrl + "/numbers", {}).then(ansibleRes => {
               axios.post(monitoringUrl + "/performanceData", {
                   numberOfRunningPods: ansibleRes.data.numberOfActivePods,
                   avgLoad: avgLoadPerUser * waitingRoomRes.data.numberOfActiveUsers / ansibleRes.data.numberOfActivePods,
@@ -139,10 +154,17 @@ function App() {
                   queueLength: waitingRoomRes.data.usersQueueLength,
                   swfDeployUrl: "a"//https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
               }).then(_ => {
-                  console.log("Performance data updated.");
-                  setActivePods(ansibleRes.data.numberOfActivePods);
-                  setActiveUsers(waitingRoomRes.data.numberOfActiveUsers);
-                  setQueueLength(waitingRoomRes.data.usersQueueLength);
+                  axios.get(ansibleUrl + "/numbers", {}).then(ansibleNumbers => {
+                      setActivePods(ansibleNumbers.data.numberOfActivePods);
+                  });
+                  axios.get(waitingRoomUrl + "/numbers", {}).then(waitingRoomNumbers => {
+                      setActiveUsers(waitingRoomNumbers.data.numberOfActiveUsers);
+                      setQueueLength(waitingRoomNumbers.data.usersQueueLength);
+                  });
+                  axios.get(ticketManagerUrl + "/numbers", {}).then(ticketManagerNumbers => {
+                      setTicketsOpened(ticketManagerNumbers.data.numberOfOpenedTickets);
+                      setTicketsClosed(ticketManagerNumbers.data.numberOfClosedTickets);
+                  });
               }).catch(err => {
                   console.log("Failed to set performance data.", err);
               });
@@ -152,7 +174,7 @@ function App() {
       }).catch(err => {
           console.log("Failed to change number of users.", err);
       });
-  }, [avgLoadPerUser, ansibleUrl, monitoringUrl, minActivePods, maxActivePods, queueLength]);
+  }, [avgLoadPerUser, ansibleUrl, monitoringUrl, waitingRoomUrl, ticketManagerUrl, minActivePods, maxActivePods, queueLength]);
 
   const reset = useCallback((event: MouseEvent) => {
       event.preventDefault();
@@ -224,6 +246,29 @@ function App() {
                                     onClick={event => addUsers(event, -1 * removedUsers)}>
                                 Remove
                             </button>
+                        </label>
+                    </form>
+                </div>
+            </div>
+
+            <div key={RUNTIME_STATUS}>
+                <div className={"url"}>
+                    <h3>Current status</h3>
+                    <form>
+                        <label>
+                            Active Users: {activeUsers}
+                        </label>
+                        <label>
+                            Queued Users: {queueLength}
+                        </label>
+                        <label>
+                            Active Pods: {activePods}
+                        </label>
+                        <label>
+                            Tickets opened: {ticketsOpened}
+                        </label>
+                        <label>
+                            Tickets closed: {ticketsClosed}
                         </label>
                         <label>
                             <button onMouseDown={stopPropagation}
@@ -311,7 +356,7 @@ function App() {
             }
 
             {viewUnifiedLog &&
-                <div key={GLOBAL_LOG}>
+                <div key={GLOBAL_LOG} className={"large-log"}>
                     <div className={"url"}>
                         <h3>Unified Log</h3>
                     </div>
