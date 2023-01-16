@@ -51,7 +51,7 @@ app.get("/action", (req, res) => {
 
   const numberOfUsersToDequeue = Math.floor(Math.min(performanceData.queueLength, (90 - performanceData.avgLoad) * performanceData.numberOfRunningPods / performanceData.avgLoadPerUser));
 
-  if (performanceData.avgLoad > 90 || numberOfUsersToDequeue < 1) {
+  if (performanceData.avgLoad > 90 || (numberOfUsersToDequeue < 1 && performanceData.queueLength > 0)) {
     inference = {
       action: "SCALE_UP",
       numberOfPods: 1
