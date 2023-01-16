@@ -464,6 +464,97 @@ objects:
     metadata:
       annotations:
         app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+      name: webapp
+      namespace: "${OPENSHIFT_NAMESPACE}"
+      labels:
+        app: webapp
+        app.kubernetes.io/component: webapp
+        app.kubernetes.io/instance: webapp
+        app.kubernetes.io/name: webapp
+        app.kubernetes.io/part-of: webapp
+    spec:
+      lookupPolicy:
+        local: false
+  - kind: BuildConfig
+    apiVersion: build.openshift.io/v1
+    metadata:
+      annotations:
+        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+      name: webapp
+      namespace: "${OPENSHIFT_NAMESPACE}"
+      labels:
+        app: webapp
+        app.kubernetes.io/component: webapp
+        app.kubernetes.io/instance: webapp
+        app.kubernetes.io/name: webapp
+        app.kubernetes.io/part-of: webapp
+    spec:
+      nodeSelector: null
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "webapp:latest"
+      strategy:
+        type: Docker
+        dockerStrategy:
+          dockerfilePath: Dockerfile
+      source:
+        type: Git
+        git:
+          uri: "https://github.com/paulovmr/swf-demo"
+        contextDir: webapp
+      runPolicy: Serial
+  - apiVersion: serving.knative.dev/v1
+    kind: Service
+    metadata:
+      annotations:
+        app.openshift.io/route-disabled: "false"
+        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        image.openshift.io/triggers: >-
+          [{"from":{"kind":"ImageStreamTag","name":"webapp:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"webapp\")].image","pause":"false"}]
+      name: webapp
+      namespace: "${OPENSHIFT_NAMESPACE}"
+      labels:
+        app: webapp
+        app.kubernetes.io/component: webapp
+        app.kubernetes.io/instance: webapp
+        app.kubernetes.io/name: webapp
+        app.kubernetes.io/part-of: webapp
+    spec:
+      template:
+        metadata:
+          annotations:
+            autoscaling.knative.dev/target: "100"
+            autoscaling.knative.dev/targetUtilizationPercentage: "70"
+            autoscaling.knative.dev/window: 60s
+          labels:
+            app.kubernetes.io/component: webapp
+            app.kubernetes.io/instance: webapp
+            app.kubernetes.io/part-of: webapp
+        spec:
+          containerConcurrency: 0
+          containers:
+            - image: >-
+                image-registry.openshift-image-registry.svc:5000/${OPENSHIFT_NAMESPACE}/webapp
+              imagePullPolicy: Always
+              name: webapp
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+              readinessProbe:
+                successThreshold: 1
+                tcpSocket:
+                  port: 0
+          enableServiceLinks: false
+          timeoutSeconds: 300
+      traffic:
+        - latestRevision: true
+          percent: 100
+  - kind: ImageStream
+    apiVersion: image.openshift.io/v1
+    metadata:
+      annotations:
+        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
       name: serverless-workflow
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
