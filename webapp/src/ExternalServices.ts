@@ -13,3 +13,6 @@ export const TICKET_MANAGER_SERVICE_URL =
 
 export const WAITING_ROOM_SERVICE_URL =
   process.env.REACT_APP_WAITING_ROOM_SERVICE_URL ?? "http://localhost:3005";
+
+export const SERVERLESS_WORKFLOW_URL =
+  process.env.REACT_APP_SERVERLESS_WORKFLOW_URL ?? "http://localhost:8080";

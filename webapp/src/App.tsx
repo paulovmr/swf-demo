@@ -20,6 +20,7 @@ import {
     ACTION_INFERRER_SERVICE_URL,
     ANSIBLE_SERVICE_URL,
     MONITORING_SYSTEM_SERVICE_URL,
+    SERVERLESS_WORKFLOW_URL,
     TICKET_MANAGER_SERVICE_URL,
     WAITING_ROOM_SERVICE_URL,
   } from "./ExternalServices";
@@ -155,7 +156,7 @@ function App() {
                   minActivePods: minActivePods,
                   maxActivePods: maxActivePods,
                   queueLength: waitingRoomRes.data.usersQueueLength,
-                  swfDeployUrl: "https://serverless-workflow-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com"
+                  swfDeployUrl: SERVERLESS_WORKFLOW_URL
               }).then(_ => {
                   axios.get(ansibleUrl + "/numbers", {}).then(ansibleNumbers => {
                       setActivePods(ansibleNumbers.data.numberOfActivePods);

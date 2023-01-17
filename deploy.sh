@@ -63,5 +63,6 @@ oc start-build webapp \
   --env="REACT_APP_ANSIBLE_SERVICE_URL=$ansible_url" \
   --env="REACT_APP_MONITORING_SYSTEM_SERVICE_URL=$monitoring_system_url" \
   --env="REACT_APP_TICKET_MANAGER_SERVICE_URL=$ticket_manager_url" \
-  --env="REACT_APP_WAITING_ROOM_SERVICE_URL=$waiting_room_url"
+  --env="REACT_APP_WAITING_ROOM_SERVICE_URL=$waiting_room_url" \
+  --env="REACT_APP_SERVERLESS_WORKFLOW_URL=$serverless_workflow_url"
 echo "Start building resources...done"
