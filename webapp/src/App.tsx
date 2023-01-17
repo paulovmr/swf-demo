@@ -16,6 +16,13 @@ import Log from "./Log";
 import Url from "./Url";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import {
+    ACTION_INFERRER_SERVICE_URL,
+    ANSIBLE_SERVICE_URL,
+    MONITORING_SYSTEM_SERVICE_URL,
+    TICKET_MANAGER_SERVICE_URL,
+    WAITING_ROOM_SERVICE_URL,
+  } from "./ExternalServices";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -43,17 +50,11 @@ function App() {
     const [addedUsers, setAddedUsers] = useState(0);
     const [removedUsers, setRemovedUsers] = useState(0);
 
-    const [actionInferrerUrl, setActionInferrerUrl] = useState("https://action-inferrer-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-    const [ansibleUrl, setAnsibleUrl] = useState("https://ansible-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-    const [monitoringUrl, setMonitoringUrl] = useState("https://monitoring-system-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-    const [ticketManagerUrl, setTicketManagerUrl] = useState("https://ticket-manager-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-    const [waitingRoomUrl, setWaitingRoomUrl] = useState("https://waiting-room-paulovmr-dev.apps.sandbox.x8i5.p1.openshiftapps.com");
-
-    /*const [actionInferrerUrl, setActionInferrerUrl] = useState("http://localhost:3001");
-    const [ansibleUrl, setAnsibleUrl] = useState("http://localhost:3002");
-    const [monitoringUrl, setMonitoringUrl] = useState("http://localhost:3003");
-    const [ticketManagerUrl, setTicketManagerUrl] = useState("http://localhost:3004");
-    const [waitingRoomUrl, setWaitingRoomUrl] = useState("http://localhost:3005");*/
+    const [actionInferrerUrl, setActionInferrerUrl] = useState(ACTION_INFERRER_SERVICE_URL);
+    const [ansibleUrl, setAnsibleUrl] = useState(ANSIBLE_SERVICE_URL);
+    const [monitoringUrl, setMonitoringUrl] = useState(MONITORING_SYSTEM_SERVICE_URL);
+    const [ticketManagerUrl, setTicketManagerUrl] = useState(TICKET_MANAGER_SERVICE_URL);
+    const [waitingRoomUrl, setWaitingRoomUrl] = useState(WAITING_ROOM_SERVICE_URL);
 
   const layout: Layout[] = useMemo(() => {
       if (viewUnifiedLog) {
