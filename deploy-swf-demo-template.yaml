@@ -7,7 +7,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: action-inferrer
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -23,7 +23,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: action-inferrer
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -45,7 +45,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: action-inferrer
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -53,7 +53,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"action-inferrer:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"action-inferrer\")].image","pause":"false"}]
       name: action-inferrer
@@ -99,7 +99,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: waiting-room
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -115,7 +115,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: waiting-room
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -137,7 +137,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: waiting-room
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -145,7 +145,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"waiting-room:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"waiting-room\")].image","pause":"false"}]
       name: waiting-room
@@ -190,7 +190,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: ansible
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -206,7 +206,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: ansible
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -228,7 +228,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: ansible
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -236,7 +236,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"ansible:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"ansible\")].image","pause":"false"}]
       name: ansible
@@ -281,7 +281,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: monitoring-system
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -297,7 +297,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: monitoring-system
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -319,7 +319,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: monitoring-system
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -327,7 +327,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"monitoring-system:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"monitoring-system\")].image","pause":"false"}]
       name: monitoring-system
@@ -372,7 +372,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: ticket-manager
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -388,7 +388,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: ticket-manager
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -410,7 +410,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: ticket-manager
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -418,7 +418,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"ticket-manager:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"ticket-manager\")].image","pause":"false"}]
       name: ticket-manager
@@ -463,7 +463,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: webapp
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -479,7 +479,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: webapp
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -501,7 +501,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: webapp
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -509,7 +509,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"webapp:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"webapp\")].image","pause":"false"}]
       name: webapp
@@ -554,7 +554,7 @@ objects:
     apiVersion: image.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: serverless-workflow
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -570,7 +570,7 @@ objects:
     apiVersion: build.openshift.io/v1
     metadata:
       annotations:
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
       name: serverless-workflow
       namespace: "${OPENSHIFT_NAMESPACE}"
       labels:
@@ -592,7 +592,7 @@ objects:
       source:
         type: Git
         git:
-          uri: "https://github.com/paulovmr/swf-demo"
+          uri: "${GITHUB_REPOSITORY}"
         contextDir: serverless-workflow
       runPolicy: Serial
   - apiVersion: serving.knative.dev/v1
@@ -600,7 +600,7 @@ objects:
     metadata:
       annotations:
         app.openshift.io/route-disabled: "false"
-        app.openshift.io/vcs-uri: "https://github.com/paulovmr/swf-demo"
+        app.openshift.io/vcs-uri: "${GITHUB_REPOSITORY}"
         image.openshift.io/triggers: >-
           [{"from":{"kind":"ImageStreamTag","name":"serverless-workflow:latest","namespace":"${OPENSHIFT_NAMESPACE}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"serverless-workflow\")].image","pause":"false"}]
       name: serverless-workflow
@@ -644,3 +644,5 @@ objects:
 parameters:
   - name: OPENSHIFT_NAMESPACE
     description: Namespace to create the resources
+  - name: GITHUB_REPOSITORY
+    description: Repository to take the code from

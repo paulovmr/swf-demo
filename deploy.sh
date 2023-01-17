@@ -3,9 +3,10 @@
 # Before using this script:
 # (1) Update URLs in `serverless-workflow/src/main/resources/application.properties` if needed.
 # (2) Export the following environment variables:
-#    OPENSHIFT_TOKEN
-#    OPENSHIFT_SERVER
-#    OPENSHIFT_NAMESPACE
+#    OPENSHIFT_TOKEN (Token to access your OpenShift instance)
+#    OPENSHIFT_SERVER (Server associated with your OpenShift instance)
+#    OPENSHIFT_NAMESPACE (Namespace or project where the deployments will be placed)
+#    GITHUB_REPOSITORY (Source code of the services)
 
 oc login --token=$OPENSHIFT_TOKEN --server=$OPENSHIFT_SERVER
 
@@ -26,7 +27,7 @@ done
 echo "Deleting old resources...done"
 
 echo -e "\nCreating new resources..."
-oc process -f deploy-swf-demo-template.yaml -p OPENSHIFT_NAMESPACE=$OPENSHIFT_NAMESPACE | oc create -f -
+oc process -f deploy-swf-demo-template.yaml -p OPENSHIFT_NAMESPACE=$OPENSHIFT_NAMESPACE -p GITHUB_REPOSITORY=$GITHUB_REPOSITORY | oc create -f -
 echo "Creating new resources...done"
 
 echo -e "\nResolving routes..."
@@ -52,7 +53,11 @@ oc start-build ansible
 oc start-build monitoring-system
 oc start-build ticket-manager
 oc start-build waiting-room
-oc start-build serverless-workflow
+oc start-build serverless-workflow \
+  --env="ANSIBLE_SERVICE_URL=$ansible_url" \
+  --env="TICKET_MANAGER_SERVICE_URL=$ticket_manager_url" \
+  --env="ACTION_INFERRER_SERVICE_URL=$action_inferrer_url" \
+  --env="WAITING_ROOM_SERVICE_URL=$waiting_room_url"
 oc start-build webapp \
   --env="REACT_APP_ACTION_INFERRER_SERVICE_URL=$action_inferrer_url" \
   --env="REACT_APP_ANSIBLE_SERVICE_URL=$ansible_url" \
