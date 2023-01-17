@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Before using this script:
-# (1) Update URLs in `serverless-workflow/src/main/resources/application.properties` if needed.
-# (2) Export the following environment variables:
+# Export the following environment variables:
 #    OPENSHIFT_TOKEN (Token to access your OpenShift instance)
 #    OPENSHIFT_SERVER (Server associated with your OpenShift instance)
 #    OPENSHIFT_NAMESPACE (Namespace or project where the deployments will be placed)
